@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var entradaUsuario = prompt("Dime la longitud del array");
+        var longitud = parseInt(entradaUsuario);
+
+        var arrayFijo = new Array(longitud);
+
+        for(i=0; i <= arrayFijo.length -1; i++){
+            var numUsu = prompt("Dime un numero para la lista");
+            var numParseado = parseInt(numUsu);
+
+            arrayFijo[i] = numParseado;
+        }
+
+        var sumaValores = 0;
+
+        for(i=0; i <= arrayFijo.length - 1; i++){
+            sumaValores += arrayFijo[i];
+        }
+
+        var mediaAritmetica = sumaValores/arrayFijo.length
+
+        console.log(`La media aritmetica de los valores introducidos es de: ${mediaAritmetica}.`)
+
+    </script>
+</body>
+</html>
