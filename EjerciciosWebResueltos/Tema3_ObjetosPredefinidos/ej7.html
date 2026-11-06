@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 7  (Ejercicios de cadenas)
+  ENUNCIADO:
+  Crear un script que solicite una cadena y diga si es palíndromo, es decir, se escribe igual de derecha a izquierda y de izquierda a derecha.
+  Ejemplo de palíndromo: Allí ves Sevilla.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 7</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        Cadena: <input type="text" id="cadena">
+        <input type="submit" value="Enviar" onclick="comprobarPali(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        // Da la vuelta a un texto: lo parte en letras, invierte el array y lo vuelve a unir
+        function reverseString(str) {
+            return str.split("").reverse().join("");
+        }
+
+        function comprobarPali() {
+            let texto = document.getElementById("cadena").value;
+
+            // Expresión regular /\s/g = todos los espacios en blanco → los quitamos
+            texto = texto.replace(/\s/g, "");
+            texto = texto.toLowerCase();
+            // CORREGIDO: hay que quitar tildes, si no "Allí ves Sevilla" (el ejemplo) no daba palíndromo
+            // normalize("NFD") separa "í" en "i" + tilde, y el replace borra las tildes
+            texto = texto.normalize("NFD").replace(/[̀-ͯ]/g, "");
+            // Quitamos signos de puntuación (el punto final del ejemplo, comas...)
+            texto = texto.replace(/[.,;:¡!¿?]/g, "");
+
+            if (texto == reverseString(texto)) {
+                document.getElementById("result").innerHTML = "Es palíndromo";
+            } else {
+                document.getElementById("result").innerHTML = "No es palíndromo";
+            }
+        }
+    </script>
+</body>
+
+</html>

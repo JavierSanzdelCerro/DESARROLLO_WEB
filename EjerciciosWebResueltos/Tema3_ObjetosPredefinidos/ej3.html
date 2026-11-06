@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 3  (Ejercicios de arrays)
+  ENUNCIADO:
+  Dado el siguiente array: [4,0,3,4,7,3,5,8,1,8,8,0,2,3,1,2,5,7,3,2,5,1]. Genera un nuevo array con los elementos originales sin repetir y ordenado.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 3</title>
+</head>
+
+<body>
+    <script>
+        let numeros = [4, 0, 3, 4, 7, 3, 5, 8, 1, 8, 8, 0, 2, 3, 1, 2, 5, 7, 3, 2, 5, 1];
+
+        // new Set() crea un conjunto, que NO admite repetidos
+        // [...conjunto] (spread) lo vuelve a convertir en array
+        let sinRepetir = [...new Set(numeros)];
+
+        // OJO: sort() sin función ordena como TEXTO (10 iría antes que 2)
+        // (a, b) => a - b ordena de forma numérica de menor a mayor
+        sinRepetir.sort((a, b) => a - b);
+
+        document.write("Array original: " + numeros.join(" ") + "<br><br>");
+        document.write("Sin repetir y ordenado: " + sinRepetir.join(" "));
+    </script>
+</body>
+
+</html>

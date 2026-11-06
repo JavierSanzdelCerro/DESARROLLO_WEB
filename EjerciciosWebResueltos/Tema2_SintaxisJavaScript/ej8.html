@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 8
+  ENUNCIADO:
+  Crea un script que genera una pirámide con los números que tenga la siguiente pinta:
+  1
+  22
+  333
+  4444
+  55555
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 8</title>
+</head>
+
+<body>
+    <script>
+        // Número de filas de la pirámide (el ejemplo llega hasta el 5)
+        let filas = 5;
+
+        // Bucle exterior: una vuelta por fila (i = número que se escribe en esa fila)
+        for (let i = 1; i <= filas; i++) {
+            // Bucle interior: escribe el número i, i veces
+            for (let u = 1; u <= i; u++) {
+                document.write(i);
+            }
+            // En HTML el salto de línea se hace con <br>, no con "\n"
+            document.write("<br>");
+        }
+    </script>
+</body>
+
+</html>

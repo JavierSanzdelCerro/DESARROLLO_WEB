@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 8  (Ejercicios de cadenas)
+  ENUNCIADO:
+  Crear un script que solicite el nombre y apellidos de una persona (en una sola vez) y luego los muestre como “apellidos, nombre”.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 8</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        Inserte el nombre y apellidos: <input type="text" id="nomape">
+        <input type="submit" value="Enviar" onclick="invertirNomApe(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        function invertirNomApe() {
+            // split(/\s+/) parte por uno o más espacios → ["Juan", "Pérez", "García"]
+            let partes = document.getElementById("nomape").value.trim().split(/\s+/);
+
+            // shift() saca y devuelve el PRIMER elemento (el nombre); en el array quedan los apellidos
+            let nombre = partes.shift();
+            let apellidos = partes.join(" ");
+
+            document.getElementById("result").innerHTML = apellidos + ", " + nombre;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+  TEMA 4 · EJERCICIO 9
+  ENUNCIADO:
+  Realiza un programa que tenga una imagen de una bola de papel y una papelera vacía. Cuando se arrastre la bola de papel a la papelera vacía, deberá cambiar la imagen de la papelera vacía a una papelera llena.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 4 - Ejercicio 9</title>
+    <script src="ej9.js"></script>
+</head>
+
+<body>
+    <!-- ZONA DE SOLTAR: ondragover permite soltar encima y ondrop se ejecuta al soltar -->
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img id="papelera" src="papeleraVacia.jpg" alt="Papelera">
+    </div>
+
+    <!-- ELEMENTO ARRASTRABLE: draggable="true" + ondragstart al empezar a arrastrar -->
+    <img id="bola" src="bola.jpg" alt="Bola de papel" draggable="true" ondragstart="drag(event)">
+</body>
+
+</html>

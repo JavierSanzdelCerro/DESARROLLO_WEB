@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 1  (Ejercicios de arrays)
+  ENUNCIADO:
+  Crea un script en el que se pida al usuario un vector de números enteros e indique en pantalla la media aritmética de todos sus elementos. Para parar la introducción de número, teclea un 0.
+  Comprueba que todos los valores son números, antes de hacer la operación.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 1</title>
+</head>
+
+<body>
+    <script>
+        // Array vacío donde iremos metiendo los números
+        let arrayNums = [];
+        let entrada;
+
+        do {
+            entrada = prompt("Inserte un número entero (0 para terminar)");
+            // Si pulsa Cancelar (null) salimos para no quedarnos en bucle infinito
+            if (entrada === null) {
+                break;
+            }
+            let num = parseInt(entrada);
+
+            // CORREGIDO: antes no se comprobaba que fuera número y se ignoraban los negativos (num > 0)
+            if (isNaN(num)) {
+                alert("'" + entrada + "' no es un número, no se tiene en cuenta");
+            } else if (num !== 0) {
+                arrayNums.push(num); // push() añade al final del array
+            }
+        } while (parseInt(entrada) !== 0);
+
+        // Si no hay números, reduce() daría error con un array vacío
+        if (arrayNums.length === 0) {
+            document.write("No se ha introducido ningún número.");
+        } else {
+            // reduce() recorre el array acumulando: suma = suma + valor (empieza en 0)
+            let suma = arrayNums.reduce((suma, valor) => suma + valor, 0);
+            let media = suma / arrayNums.length;
+            document.write("Números: " + arrayNums.join(", ") + "<br>");
+            document.write("Media aritmética: " + media);
+        }
+    </script>
+</body>
+
+</html>

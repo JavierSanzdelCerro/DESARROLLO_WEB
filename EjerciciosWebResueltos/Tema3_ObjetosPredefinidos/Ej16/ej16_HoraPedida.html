@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[ ... mismo array que en ej16.html ... ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  VARIANTE: el usuario elige la HORA DE INICIO (HH:MM), cuánto dura cada clase y cuánto dura el recreo.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 16 (hora pedida)</title>
+</head>
+
+<body>
+    <script>
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SASP"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+        ];
+
+        function formatoHora(d) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            if (h < 10) { h = "0" + h; }
+            if (m < 10) { m = "0" + m; }
+            return h + ":" + m;
+        }
+
+        // PARTE NUEVA 1: pedir la hora "HH:MM" y separarla con split(":")
+        let horaTexto = prompt("¿A qué hora empieza la primera clase? (HH:MM)", "08:30");
+        let partes = (horaTexto || "").split(":");
+        let horas = parseInt(partes[0]);
+        let minutos = parseInt(partes[1]);
+
+        // Repetimos mientras no sea una hora válida
+        while (partes.length !== 2 || isNaN(horas) || isNaN(minutos) || horas < 0 || horas > 23 || minutos < 0 || minutos > 59) {
+            horaTexto = prompt("Hora no válida. Escribe la hora así: HH:MM", "08:30");
+            partes = (horaTexto || "").split(":");
+            horas = parseInt(partes[0]);
+            minutos = parseInt(partes[1]);
+        }
+
+        // PARTE NUEVA 2: pedir duraciones (en minutos) con un valor por defecto en el prompt
+        let durClase = parseInt(prompt("¿Cuántos minutos dura cada clase?", "55"));
+        let durRecreo = parseInt(prompt("¿Cuántos minutos dura el recreo?", "30"));
+        // Si escribe algo que no es número, usamos valores por defecto
+        if (isNaN(durClase)) { durClase = 55; }
+        if (isNaN(durRecreo)) { durRecreo = 30; }
+
+        // Creamos la hora de inicio con los datos pedidos
+        let inicio = new Date();
+        inicio.setHours(horas, minutos, 0, 0);
+
+        document.write("<table border='1'>");
+        document.write("<tr><th></th><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th></tr>");
+
+        for (let f = 0; f < horario.length; f++) {
+            let esRecreo = horario[f][0] === "RECREO";
+            // La duración ahora sale de lo que ha escrito el usuario
+            let duracion = esRecreo ? durRecreo : durClase;
+
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+            for (let c = 0; c < horario[f].length; c++) {
+                document.write("<td>" + horario[f][c] + "</td>");
+            }
+            document.write("</tr>");
+
+            // En esta variante las clases van seguidas (sin pausa de 5 min)
+            inicio = new Date(fin);
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 14  (Ejercicios de fechas — Usa objetos Date)
+  ENUNCIADO:
+  Crea un script que diga si la fecha es de un año bisiesto.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 14</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        <p>Inserte la fecha:</p>
+        Día: <input type="text" id="dia" size="1"> Mes: <input type="text" id="mes" size="1"> Año: <input type="text" id="anyo" size="2"><br><br>
+        <input type="submit" value="Enviar" onclick="obtenerFecha(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        // Regla: divisible entre 4 y NO entre 100, o divisible entre 400 (2000 sí, 1900 no)
+        function bisiesto(anyo) {
+            return (anyo % 4 == 0 && anyo % 100 != 0) || anyo % 400 == 0;
+        }
+
+        function obtenerFecha() {
+            let dia = document.getElementById("dia").value;
+            let mes = document.getElementById("mes").value - 1;
+            let anyo = document.getElementById("anyo").value;
+            let fecha = new Date(anyo, mes, dia);
+
+            if (bisiesto(fecha.getFullYear())) {
+                document.getElementById("result").innerHTML = "Es bisiesto";
+            } else {
+                document.getElementById("result").innerHTML = "No es bisiesto";
+            }
+            // OTRA FORMA con Date: new Date(anyo, 1, 29).getDate() === 29 → si existe el 29 de febrero, es bisiesto
+        }
+    </script>
+</body>
+
+</html>

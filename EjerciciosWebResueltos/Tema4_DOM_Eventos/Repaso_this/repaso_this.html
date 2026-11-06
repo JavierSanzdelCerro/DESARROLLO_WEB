@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+  TEMA 4 · REPASO DE 'this' (no es un ejercicio del documento)
+  Página de práctica: pulsa cada botón y mira el resultado abajo.
+  Cada caso muestra QUÉ vale 'this' según CÓMO se asigna el evento.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 4 - Repaso de this</title>
+    <script src="repaso_this.js"></script>
+    <style>
+        button { margin: 4px; }
+        #caja { border: 2px dashed gray; padding: 10px; margin: 8px 0; }
+        #log { background: #eee; padding: 8px; font-family: monospace; }
+    </style>
+</head>
+
+<body>
+    <h3>¿Qué vale 'this'?</h3>
+
+    <!-- CASO 1: onclick en el HTML pasando 'this' como parámetro -->
+    <button id="b1" onclick="caso1(this)">Caso 1: onclick="f(this)"</button>
+
+    <!-- CASO 2, 3 y 4: los eventos se asignan desde el .js -->
+    <button id="b2">Caso 2: elemento.onclick = f</button>
+    <button id="b3">Caso 3: addEventListener + function</button>
+    <button id="b4">Caso 4: addEventListener + flecha =&gt;</button>
+
+    <!-- CASO 5: this vs event.target con un elemento DENTRO de otro -->
+    <div id="caja">Caso 5: haz clic aquí o <span id="dentro" style="background: yellow;">en este span de dentro</span></div>
+
+    <!-- CASO 6: this dentro de un objeto (no es un evento) -->
+    <button id="b6">Caso 6: this en un método de objeto</button>
+
+    <div id="log"></div>
+</body>
+
+</html>

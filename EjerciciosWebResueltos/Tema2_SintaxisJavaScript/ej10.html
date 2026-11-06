@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 10
+  ENUNCIADO:
+  Crea un script que calcule el precio de un billete de autobús, IVA incluido. Para ello, se deben seguir los siguientes criterios:
+  • Pedir: nombre, edad y día de la semana que quiere viajar.
+  • Si tiene entre 18 y 26 años o es mayor de 60 se le aplicará un descuento del 15%.
+  • Si viaja miércoles o viernes, además se le aplicará un descuento del 5%. • El precio de un billete simple es de 12,5 euros SIN IVA. • El resultado debe expresar el motivo del descuento y un resumen del precio con IVA y SIN IVA.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 10</title>
+</head>
+
+<body>
+    <script>
+        // Constantes: valores fijos que no cambian (por convenio en MAYÚSCULAS)
+        const PRECIO_BASE = 12.5; // sin IVA
+        const IVA = 0.21;
+
+        let nombre = prompt("Dime tu nombre");
+        let edad = parseInt(prompt("Dime tu edad"));
+        // toLowerCase() para que "Viernes" y "viernes" se traten igual
+        let dia = (prompt("¿Qué día de la semana quieres viajar? (lunes, martes...)") || "").toLowerCase();
+
+        let descuento = 0;
+        let motivos = ""; // aquí vamos acumulando el texto con los motivos del descuento
+
+        // CORREGIDO: la edad era 16-26 y >= 60; el enunciado dice 18-26 o MAYOR de 60
+        if ((edad >= 18 && edad <= 26) || edad > 60) {
+            descuento += 0.15;
+            motivos += "Descuento por edad (15%). ";
+        }
+        // CORREGIDO: antes era "else if" y no se acumulaban; el enunciado dice "ADEMÁS" → dos if separados
+        // CORREGIDO: antes sumaba 0.5 (50%) en vez de 0.05 (5%)
+        if (dia == "miercoles" || dia == "miércoles" || dia == "viernes") {
+            descuento += 0.05;
+            motivos += "Descuento por viajar " + dia + " (5%). ";
+        }
+        if (motivos == "") {
+            motivos = "Sin descuento.";
+        }
+
+        // CORREGIDO: antes se multiplicaba precio * descuento (eso es lo que te ahorras, no lo que pagas)
+        let sinIva = PRECIO_BASE * (1 - descuento);
+        let conIva = sinIva * (1 + IVA);
+
+        // toFixed(2) redondea a 2 decimales para mostrar euros
+        document.write("<h3>Billete simple - " + nombre + "</h3>");
+        document.write("<p>" + motivos + "</p>");
+        document.write("<p>Precio SIN IVA: " + sinIva.toFixed(2) + " €</p>");
+        document.write("<p>Precio CON IVA: " + conIva.toFixed(2) + " €</p>");
+    </script>
+</body>
+
+</html>

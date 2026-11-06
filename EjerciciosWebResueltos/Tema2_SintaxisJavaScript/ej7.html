@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 7
+  ENUNCIADO:
+  Crea un script que pida al usuario la entrada de un número. Este cuadro de diálogo aparecerá hasta que el usuario introduzca un número en concreto que debes escoger a tu elección.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 7</title>
+</head>
+
+<body>
+    <script>
+        // Número secreto elegido por nosotros
+        let n = 26;
+        // "Bandera": variable booleana que controla cuándo salir del bucle
+        let bandera = false;
+
+        // Mientras NO se haya acertado, se sigue preguntando
+        while (!bandera) {
+            let num = prompt("Dime un número");
+            if (parseInt(num) == n) {
+                bandera = true; // al ponerla a true, el while termina
+            }
+        }
+        document.write("¡Has acertado! El número era " + n);
+    </script>
+</body>
+
+</html>

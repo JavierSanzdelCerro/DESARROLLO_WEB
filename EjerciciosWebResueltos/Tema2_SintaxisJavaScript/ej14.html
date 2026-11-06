@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 14
+  ENUNCIADO:
+  Crea un script que pida un número y nos muestre la siguiente estructura hasta el número correspondiente.
+  Ej. Para número=5
+  55555
+  *4444
+  **333
+  ***22
+  ****1
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 14</title>
+</head>
+
+<body>
+    <script>
+        // 'numero' irá bajando (5,4,3...) y 'auxiliar' guarda el valor original (el ancho de cada fila)
+        let numero = parseInt(prompt("Inserte número:"));
+        let auxiliar = numero;
+
+        // En cada fila: i sube y numero baja (se pueden actualizar dos variables en el for separadas por coma)
+        for (let i = 0; i < auxiliar; i++, numero--) {
+            // Cada fila tiene siempre 'auxiliar' caracteres
+            for (let j = 0; j < auxiliar; j++) {
+                // Las primeras posiciones son asteriscos; las últimas 'numero' posiciones son el número
+                if (j + numero < auxiliar) {
+                    document.write("*");
+                } else {
+                    document.write(numero);
+                }
+            }
+            document.write("<br>");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 9
+  ENUNCIADO:
+  Crea un script en el que el usuario si introduce (C3PO, R2, Vader o luck ) nos responda diciendo que son personajes de Star Wars y si introduce cualquier otro nos responda que no son personajes de la película. Pista: Los datos podrán ser introducidos tanto en minúsculas como en mayúsculas: miCadena.toUppercase();
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 9</title>
+</head>
+
+<body>
+    <script>
+        // || "" evita un error si el usuario pulsa Cancelar (prompt devolvería null)
+        let personaje = (prompt("Dime un personaje de Star Wars") || "").toUpperCase();
+
+        // Guardamos los personajes ya en MAYÚSCULAS para comparar sin importar cómo escriba el usuario
+        let personajes = ["C3PO", "R2", "VADER", "LUCK"];
+
+        // CORREGIDO: antes el bucle hacía break en el primer fallo y solo reconocía "C3PO"
+        // includes() devuelve true si el array contiene ese valor
+        if (personajes.includes(personaje)) {
+            document.write(personaje + " es un personaje de Star Wars");
+        } else {
+            document.write(personaje + " NO es un personaje de Star Wars");
+        }
+    </script>
+</body>
+
+</html>

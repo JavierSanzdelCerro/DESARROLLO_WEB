@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 6
+  ENUNCIADO:
+  Crea un script que dado un número que introducirá un usuario por pantalla, calcule su factorial. Recuerda que el factorial de un número es el producto de todos los números enteros desde 1 hasta dicho número.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 6</title>
+</head>
+
+<body>
+    <script>
+        let a = parseInt(prompt("Dime un número"));
+
+        // Empezamos en 1 (no en 0) porque vamos a multiplicar
+        let resultado = 1;
+        // Multiplicamos 1 * 2 * 3 * ... * a
+        for (let i = 1; i <= a; i++) {
+            resultado *= i; // equivale a: resultado = resultado * i
+        }
+        document.write("El factorial de " + a + " es " + resultado);
+    </script>
+</body>
+
+</html>

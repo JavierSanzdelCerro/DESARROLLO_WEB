@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 16
+  ENUNCIADO:
+  Crea un script que dado un par de números, alto y ancho cree un rectángulo, el borde y el relleno serán caracteres pedidos. Puedes utilizar las etiquetas <tt> y <pre>
+  Ej. Alto = 4 y ancho = 6, borde =”%”; relleno=”&”
+  %%%%%%
+  %&&&&%
+  %&&&&%
+  %%%%%%
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 16</title>
+</head>
+
+<body>
+    <script>
+        let alto = parseInt(prompt("Inserte alto:"));
+        let ancho = parseInt(prompt("Inserte ancho:"));
+        let borde = prompt("Inserte carácter para el borde:");
+        let relleno = prompt("Inserte carácter para el relleno:");
+
+        // <pre> usa letra de ancho fijo, así todas las columnas quedan alineadas
+        document.write("<pre>");
+        // i = fila, j = columna
+        for (let i = 0; i < alto; i++) {
+            for (let j = 0; j < ancho; j++) {
+                // Es relleno si NO está en la primera/última fila NI en la primera/última columna
+                if (i != 0 && j != 0 && i < alto - 1 && j < ancho - 1) {
+                    document.write(relleno);
+                } else {
+                    document.write(borde);
+                }
+            }
+            document.write("<br>");
+        }
+        document.write("</pre>");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 20
+  ENUNCIADO:
+  Crea un script que pida dos números, y genere un aleatorio entre ambos números (incluidos). Hay que controlar que sean números entero, si no lo son, los ha de volver a pedir. Ojo que pueden darnos primero el número más alto o el más bajo, lo debemos controlar.
+  Ayudate de la siguiente funcion:
+   Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+  Ha de pedir también al usuario el nivel de dificultad. Fácil, normal o difícil.
+  - Fácil significa que el usuario tiene N/2 intentos siendo N el rango del número aleatorio
+  - Normal significa que el usuario tiene N/4 intentos siendo N el rango del número aleatorio
+  - Difícil significa que el usuario tiene N/8 intentos siendo N el rango del número aleatorio
+  Después se le dirá al usuario que acierte el número, haciendo que inserte un número.
+  - Si acierta antes de que se le acaben los intentos. El juego terminará felicitando al usuario y pidiéndole su nombre para colocar la puntuación (Número de intentos), la dificultad en la página. Además, se le preguntará si quiere jugar de nuevo, volviendo a pedir todos los datos del juego.
+  - Si falla se le pedirá otro número hasta que agote los intentos. Además, si el nivel de dificultad es “fácil” o “normal”, cada vez que falle le indicará si el número es mayor o menor al que ha puesto
+  Pon el código en una función llamada jugar() y haz que se ejecute en atributo onclick del botón. <button onclick="myFunction()">Click me</button>
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 20</title>
+</head>
+
+<body>
+    <!-- onclick llama a jugar() cada vez que se pulsa el botón -->
+    <button onclick="jugar()">¡Jugar!</button>
+    <h3>Puntuaciones</h3>
+    <!-- CORREGIDO: antes se usaba document.write, que tras cargar la página BORRA todo (incluido el botón) -->
+    <div id="puntuaciones"></div>
+
+    <script>
+        // Función auxiliar: pide un número y repite hasta que sea un entero válido
+        function pedirEntero(mensaje) {
+            let n = parseInt(prompt(mensaje));
+            while (isNaN(n)) {
+                n = parseInt(prompt("Eso no es un número entero. " + mensaje));
+            }
+            return n;
+        }
+
+        function jugar() {
+            let otraVez = true;
+
+            // Bucle de partidas: se repite mientras el usuario quiera jugar de nuevo
+            while (otraVez) {
+                // CORREGIDO: antes no se validaba y se ordenaban como texto ("10" < "9")
+                let a = pedirEntero("Inserte número 1");
+                let b = pedirEntero("Inserte número 2");
+                // Math.min / Math.max resuelven que nos den primero el alto o el bajo
+                let min = Math.min(a, b);
+                let max = Math.max(a, b);
+
+                // Fórmula del enunciado: aleatorio entre MIN y MAX, ambos incluidos
+                let secreto = Math.floor(Math.random() * (max - min + 1)) + min;
+
+                // N = cantidad de números posibles en el rango
+                let rango = max - min + 1;
+                let dificultad = (prompt("Elija dificultad: facil / normal / dificil") || "").toLowerCase();
+
+                // Según la dificultad, dividimos el rango entre 2, 4 u 8
+                let divisor;
+                switch (dificultad) {
+                    case "facil": case "fácil":
+                        divisor = 2;
+                        break;
+                    case "normal":
+                        divisor = 4;
+                        break;
+                    case "dificil": case "difícil":
+                        divisor = 8;
+                        break;
+                    default:
+                        alert("No ha elegido una dificultad correcta.");
+                        return; // return sale de la función entera
+                }
+
+                // Math.max(1, ...) asegura al menos 1 intento aunque el rango sea pequeño
+                let intentos = Math.max(1, Math.floor(rango / divisor));
+                let usados = 0;
+                let acertado = false;
+
+                // Bucle de intentos: termina al acertar o al agotar los intentos
+                while (usados < intentos && !acertado) {
+                    let n = pedirEntero("Adivina el número entre " + min + " y " + max + " (te quedan " + (intentos - usados) + " intentos)");
+                    usados++;
+
+                    if (n === secreto) {
+                        acertado = true;
+                    } else if (divisor !== 8) {
+                        // En fácil y normal damos pista (operador ternario: condición ? siTrue : siFalse)
+                        alert(n < secreto ? "El número secreto es MAYOR" : "El número secreto es MENOR");
+                    } else {
+                        alert("Has fallado.");
+                    }
+                }
+
+                if (acertado) {
+                    let nombre = prompt("¡Enhorabuena, has acertado! ¿Cómo te llamas?");
+                    // innerHTML += añade contenido sin borrar lo que ya había
+                    document.getElementById("puntuaciones").innerHTML +=
+                        "<p>" + nombre + " - " + usados + " intento(s) - dificultad: " + dificultad + "</p>";
+                    // confirm() devuelve true (Aceptar) o false (Cancelar)
+                    otraVez = confirm("¿Quieres jugar de nuevo?");
+                } else {
+                    alert("Has agotado los intentos. El número era " + secreto);
+                    otraVez = false;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

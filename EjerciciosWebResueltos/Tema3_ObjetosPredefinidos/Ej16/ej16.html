@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[
+              ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+              ["DI", "SGE", "AD", "AD", "SGE"],
+              ["DI", "SGE", "AD", "AD", "SASP"],
+              ["RECREO","RECREO","RECREO","RECREO","RECREO"],
+              ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+              ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+              ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+          ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  SOLUCIÓN BASE: clases de 50 min desde las 15:45, 5 min entre clases y recreo de 15 min.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 3 - Ejercicio 16</title>
+</head>
+
+<body>
+
+    <script>
+        // Array bidimensional: cada fila es una franja, cada columna un día (L a V)
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SASP"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+        ];
+
+        // Devuelve una fecha como texto "HH:MM" (añade un 0 si es menor que 10)
+        function formatoHora(d) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            if (h < 10) { h = "0" + h; }
+            if (m < 10) { m = "0" + m; }
+            return h + ":" + m;
+        }
+
+        // PARTE 1: hora de inicio de la primera clase (15:45) como objeto Date
+        let inicio = new Date();
+        inicio.setHours(15, 45, 0, 0);
+
+        document.write("<table border='1'>");
+
+        // Cabecera con los días (la primera celda vacía es la de las horas)
+        document.write("<tr><th></th><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th></tr>");
+
+        // PARTE 2: recorro las filas del array
+        for (let f = 0; f < horario.length; f++) {
+            let esRecreo = horario[f][0] === "RECREO";
+
+            // Duración: 15 min el recreo, 50 min las clases
+            let duracion;
+            if (esRecreo) {
+                duracion = 15;
+            } else {
+                duracion = 50;
+            }
+
+            // Hora de fin = inicio + duración (copio la fecha con new Date(inicio))
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            // Fila: primero la hora calculada, luego las asignaturas
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+
+            // PARTE 3: recorro las columnas de esa fila
+            for (let c = 0; c < horario[f].length; c++) {
+                document.write("<td>" + horario[f][c] + "</td>");
+            }
+            document.write("</tr>");
+
+            // Calculo cuándo empieza la siguiente franja
+            inicio = new Date(fin);
+            // 5 min de pausa, salvo si acabo de salir del recreo o el siguiente es el recreo
+            if (!esRecreo && f + 1 < horario.length && horario[f + 1][0] !== "RECREO") {
+                inicio.setMinutes(inicio.getMinutes() + 5);
+            }
+        }
+
+        document.write("</table>");
+    </script>
+
+</body>
+
+</html>

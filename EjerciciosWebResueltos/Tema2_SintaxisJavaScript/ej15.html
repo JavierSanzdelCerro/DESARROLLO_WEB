@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 15
+  ENUNCIADO:
+  Crea un script que pida 4 palabras y las muestre ordenadas alfabéticamente.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 15</title>
+</head>
+
+<body>
+    <script>
+        // Creamos un array de 4 posiciones vacías
+        let vPalabras = new Array(4);
+
+        // Rellenamos cada posición con lo que escriba el usuario
+        for (let i = 0; i < vPalabras.length; i++) {
+            vPalabras[i] = prompt("Inserte palabra " + (i + 1));
+        }
+
+        // sort() ordena el array; localeCompare ordena bien tildes y mayúsculas/minúsculas en español
+        // (con sort() a secas "Zorro" iría antes que "abeja" porque las mayúsculas van primero)
+        vPalabras.sort((a, b) => a.localeCompare(b));
+
+        // join(", ") une los elementos del array en un texto separado por comas
+        document.write(vPalabras.join(", "));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 3
+  ENUNCIADO:
+  Crea un script que genere la tabla de multiplicar de los 10 primeros números. Deben escribirse dentro de una sección y dentro de un table.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 3</title>
+    <style>
+        td, th { border: 1px solid #999; padding: 4px 8px; }
+    </style>
+</head>
+
+<body>
+    <section>
+        <table>
+            <script>
+                // CORREGIDO: antes el <tr> se cerraba fuera del bucle y el texto quedaba fuera de las celdas
+                // Bucle exterior: una FILA por cada tabla (del 1 al 10)
+                for (let tabla = 1; tabla <= 10; tabla++) {
+                    document.write("<tr>");
+                    // Primera celda de la fila: el título de esa tabla
+                    document.write("<th>Tabla del " + tabla + "</th>");
+                    // Bucle interior: una CELDA por cada multiplicación
+                    for (let i = 1; i <= 10; i++) {
+                        document.write("<td>" + tabla + " x " + i + " = " + (tabla * i) + "</td>");
+                    }
+                    // Cerramos la fila DENTRO del bucle exterior
+                    document.write("</tr>");
+                }
+            </script>
+        </table>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 11  (Ejercicios de fechas — Usa objetos Date)
+  ENUNCIADO:
+  Calcula el tiempo transcurrido entre la pulsación de dos botones rotulados “Empezar a contar”, “Finalizar”.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 11</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        <input type="submit" value="Empezar a contar" onclick="empezarCont(); return false;"><br><br>
+        <!-- 'disabled' deja el botón gris y sin poder pulsarse hasta que se empiece a contar -->
+        <input type="submit" value="Finalizar" id="finalizar" disabled onclick="finalizarCont(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        // Variables globales para recordar el momento de inicio entre un clic y otro
+        let inicio;
+
+        function empezarCont() {
+            // new Date() sin parámetros = fecha y hora de AHORA MISMO
+            inicio = new Date();
+            document.getElementById("finalizar").disabled = false;
+            document.getElementById("result").innerHTML = "Contando...";
+        }
+
+        function finalizarCont() {
+            let fin = new Date();
+            // getTime() devuelve los milisegundos desde 1-1-1970; restando sabemos los ms transcurridos
+            let difMs = fin.getTime() - inicio.getTime();
+            // Pasamos milisegundos a segundos
+            let segundos = difMs / 1000;
+            document.getElementById("result").innerHTML = "Han pasado " + segundos + " s";
+            document.getElementById("finalizar").disabled = true;
+        }
+    </script>
+</body>
+
+</html>

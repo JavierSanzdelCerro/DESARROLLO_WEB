@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 4  (Ejercicios de arrays)
+  ENUNCIADO:
+  Genera un array con los siguientes nombres: Julián, Rodrigo, Mateo, Valdomero. Haz una ordenación de los mismos en orden normal e inverso.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 4</title>
+</head>
+
+<body>
+    <script>
+        let nombres = ["Julián", "Rodrigo", "Mateo", "Valdomero"];
+
+        // sort() MODIFICA el array original (no crea uno nuevo)
+        nombres.sort((a, b) => a.localeCompare(b));
+
+        // [...nombres] hace una COPIA; si no, reverse() también daría la vuelta a 'nombres'
+        let nombresInv = [...nombres].reverse();
+
+        document.write("Nombres ordenados: " + nombres.join(", ") + "<br><br>");
+        document.write("Nombres en orden inverso: " + nombresInv.join(", "));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 17
+  ENUNCIADO:
+  Crea un script que, dado un carácter, nos diga si es un número, si es vocal, si es consonante, si está en mayúsculas o si es otro distinto a los anteriores. Utiliza Switch case
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 17</title>
+</head>
+
+<body>
+    <script>
+        let caracter = prompt("Introduzca carácter a comprobar:");
+
+        switch (caracter) {
+            // Varios case seguidos sin break comparten el mismo código (agrupar casos)
+            case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+                document.write("Es un número.");
+                break;
+            case 'a': case 'e': case 'i': case 'o': case 'u':
+                document.write("Es vocal minúscula.");
+                break;
+            case 'A': case 'E': case 'I': case 'O': case 'U':
+                document.write("Es vocal mayúscula.");
+                break;
+            case 'b': case 'c': case 'd': case 'f': case 'g': case 'h': case 'j': case 'k': case 'l': case 'm': case 'n': case 'ñ': case 'p': case 'q': case 'r': case 's': case 't': case 'v': case 'w': case 'x': case 'y': case 'z':
+                document.write("Es consonante minúscula.");
+                break;
+            case 'B': case 'C': case 'D': case 'F': case 'G': case 'H': case 'J': case 'K': case 'L': case 'M': case 'N': case 'Ñ': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+                document.write("Es consonante mayúscula.");
+                break;
+            // default se ejecuta si no ha coincidido ningún case
+            default:
+                document.write("No es número, ni vocal, ni consonante.");
+        }
+    </script>
+</body>
+
+</html>

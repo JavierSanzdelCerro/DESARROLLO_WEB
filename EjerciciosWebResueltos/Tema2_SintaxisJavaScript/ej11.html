@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 11
+  ENUNCIADO:
+  Escribe un algoritmo en JavaScript que pregunte un numero entero, y nos diga el número de cifras que tiene. Si no es un número que siga pidiendo hasta que el usuario ponga un número.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 11</title>
+</head>
+
+<body>
+    <script>
+        let numero = parseInt(prompt("Dime un número entero"));
+
+        // isNaN() = "is Not a Number": si parseInt no pudo convertir, volvemos a pedir
+        while (isNaN(numero)) {
+            numero = parseInt(prompt("Eso no es un número. Dime un número entero"));
+        }
+
+        // Math.abs quita el signo para que -123 cuente 3 cifras
+        let aux = Math.abs(numero);
+        let cifras = 0;
+
+        // CORREGIDO: el bucle anterior fallaba con números como 99 (decía 3 cifras)
+        // do-while: se ejecuta al menos una vez, así el 0 cuenta como 1 cifra
+        do {
+            cifras++;
+            aux = Math.floor(aux / 10); // quitamos la última cifra (123 → 12 → 1 → 0)
+        } while (aux > 0);
+
+        // CORREGIDO: antes se mostraba en console.log; ahora en la página
+        document.write("El número " + numero + " tiene " + cifras + " cifra(s)");
+        // OTRA FORMA más corta: String(Math.abs(numero)).length
+    </script>
+</body>
+
+</html>

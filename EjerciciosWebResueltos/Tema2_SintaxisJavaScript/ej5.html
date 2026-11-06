@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 5
+  ENUNCIADO:
+  Crea un script que dados dos números que introducirá el usuario por pantalla diga cuál es mayor de los dos.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 5</title>
+</head>
+
+<body>
+    <script>
+        // CORREGIDO: sin parseInt se comparaban textos ("10" > "9" es false porque compara letra a letra)
+        let x = parseInt(prompt("Dime el primer número"));
+        let y = parseInt(prompt("Dime el segundo número"));
+
+        // CORREGIDO: antes el mensaje decía el mayor al revés y no contemplaba que fueran iguales
+        if (x > y) {
+            document.write("El número " + x + " es mayor que " + y);
+        } else if (y > x) {
+            document.write("El número " + y + " es mayor que " + x);
+        } else {
+            document.write("Los dos números son iguales (" + x + ")");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 21
+  ENUNCIADO:
+  Ya sabemos usar algo, botones enlazarlos a funciones javascript. Realiza una calculadora sencilla como la del dibujo.
+  (En el documento aparece un dibujo de la calculadora)
+  Cada vez que pulsemos un digito ha de aparecer en un alert el número, junto con el resto números. Por ejemplo, pulsamos el 3 aparecerá “3” si a continuación pulsamos el cuatro aparecer un alert con “34”. Si ya tenemos el primer número y la operación y pulsamos otro número aparecerá “34 + 7” en un alert.
+  Si pulsamos una operación antes de tener el primer número no hará nada, sino nos mostrará el primer número más la operación. Ejemplo “34 +” en un alert
+  Si pulsamos igual antes de tener ambos números a sumar y la operación tampoco hará nada, sino nos mostrará toda la operación. Por ejemplo: “34 + 7 = 41” en un alert
+  Si pulsamos Reset, la calculadora empezaría de nuevo.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 21</title>
+    <style>
+        button { width: 100px; height: 80px; }
+        #igual { width: 205px; }
+        #texto { border: solid 2px; width: 412px; min-height: 24px; }
+    </style>
+</head>
+
+<body>
+    <!-- Cada botón llama a la MISMA función pasándole qué tecla es -->
+    <button onclick="calculadora('1')">1</button>
+    <button onclick="calculadora('2')">2</button>
+    <button onclick="calculadora('3')">3</button>
+    <button onclick="calculadora('+')">+</button>
+    <br>
+    <button onclick="calculadora('4')">4</button>
+    <button onclick="calculadora('5')">5</button>
+    <button onclick="calculadora('6')">6</button>
+    <button onclick="calculadora('-')">-</button>
+    <br>
+    <button onclick="calculadora('7')">7</button>
+    <button onclick="calculadora('8')">8</button>
+    <button onclick="calculadora('9')">9</button>
+    <button onclick="calculadora('*')">*</button>
+    <br>
+    <button onclick="calculadora('0')">0</button>
+    <button id="igual" onclick="calculadora('=')">=</button>
+    <button onclick="calculadora('/')">/</button>
+    <br>
+    <button onclick="calculadora('C')">Reset</button>
+    <div id="texto"></div>
+
+    <script>
+        // CORREGIDO: el enunciado pide alerts; se reescribe guardando el estado en 3 variables (más fácil de seguir)
+        // Variables GLOBALES: guardan el estado entre una pulsación y la siguiente
+        let num1 = "";     // primer número (como texto, para ir pegando dígitos: "3" + "4" = "34")
+        let operador = ""; // +, -, * o /
+        let num2 = "";     // segundo número
+
+        // Muestra el texto en el alert y también en el div
+        function mostrar(texto) {
+            document.getElementById("texto").innerHTML = texto;
+            alert(texto);
+        }
+
+        function calculadora(tecla) {
+            switch (tecla) {
+                case 'C':
+                    // Reset: vaciamos todo
+                    num1 = "";
+                    operador = "";
+                    num2 = "";
+                    document.getElementById("texto").innerHTML = "";
+                    break;
+
+                case '+': case '-': case '*': case '/':
+                    // Sin primer número, o si ya hay segundo número, no hace nada
+                    if (num1 === "" || num2 !== "") {
+                        return;
+                    }
+                    operador = tecla;
+                    mostrar(num1 + " " + operador);
+                    break;
+
+                case '=':
+                    // Si falta algo, no hace nada
+                    if (num1 === "" || operador === "" || num2 === "") {
+                        return;
+                    }
+                    // parseInt convierte "34" en 34 para poder operar
+                    let a = parseInt(num1);
+                    let b = parseInt(num2);
+                    let resultado;
+                    switch (operador) {
+                        case '+': resultado = a + b; break;
+                        case '-': resultado = a - b; break;
+                        case '*': resultado = a * b; break;
+                        case '/': resultado = a / b; break;
+                    }
+                    mostrar(num1 + " " + operador + " " + num2 + " = " + resultado);
+                    // Tras el resultado, empezamos de nuevo
+                    num1 = "";
+                    operador = "";
+                    num2 = "";
+                    break;
+
+                default:
+                    // Es un dígito: va al primer número si aún no hay operador, si no al segundo
+                    if (operador === "") {
+                        num1 += tecla;
+                        mostrar(num1);
+                    } else {
+                        num2 += tecla;
+                        mostrar(num1 + " " + operador + " " + num2);
+                    }
+            }
+        }
+    </script>
+</body>
+
+</html>

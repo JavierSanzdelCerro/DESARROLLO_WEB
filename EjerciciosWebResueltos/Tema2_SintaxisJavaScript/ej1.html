@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 1
+  ENUNCIADO:
+  Crea un script que pida al usuario su nombre, edad y profesión, almacene estos datos en unas variables y los imprima en la página.
+  Utiliza document.write();
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 1</title>
+</head>
+
+<body>
+    <script>
+        // prompt() abre una ventana y SIEMPRE devuelve texto (string), o null si se pulsa Cancelar
+        let nombre = prompt("Dime tu nombre");
+        let edad = prompt("Dime tu edad");
+        let profesion = prompt("¿Cuál es tu profesión?");
+
+        // document.write() escribe HTML en la página mientras esta se está cargando
+        document.write("Nombre > " + nombre + " | Edad > " + edad + " | Profesión > " + profesion);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 15  (Ejercicios de fechas — Usa objetos Date)
+  ENUNCIADO:
+  Crea un script que nos devuelva la edad actual de una persona a partir de su fecha de nacimiento.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 15</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        <p>Inserte su fecha de nacimiento:</p>
+        Día: <input type="text" id="dia" size="1"> Mes: <input type="text" id="mes" size="1"> Año: <input type="text" id="anyo" size="2"><br><br>
+        <input type="submit" value="Enviar" onclick="calcularEdad(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        function calcularEdad() {
+            let dia = document.getElementById("dia").value;
+            let mes = document.getElementById("mes").value - 1;
+            let anyo = document.getElementById("anyo").value;
+            let nacimiento = new Date(anyo, mes, dia);
+            let hoy = new Date();
+
+            // CORREGIDO: antes se dividían los días entre 365 y fallaba cerca del cumpleaños (años bisiestos)
+            // Paso 1: restamos los años
+            let edad = hoy.getFullYear() - nacimiento.getFullYear();
+
+            // Paso 2: si este año TODAVÍA no ha llegado su cumpleaños, tiene un año menos
+            let mesHoy = hoy.getMonth();
+            let mesNac = nacimiento.getMonth();
+            if (mesHoy < mesNac || (mesHoy === mesNac && hoy.getDate() < nacimiento.getDate())) {
+                edad--;
+            }
+
+            document.getElementById("result").innerHTML = "Usted tiene " + edad + " años.";
+        }
+    </script>
+</body>
+
+</html>

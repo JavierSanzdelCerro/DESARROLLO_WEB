@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 9  (Ejercicios de cadenas)
+  ENUNCIADO:
+  Crear un script que solicite una frase y convierta a mayúsculas la primera letra de cada palabra y a minúsculas el resto.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 9</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        Inserte la frase: <input type="text" id="frase">
+        <input type="submit" value="Enviar" onclick="capitalizarFrase(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        // Pone la primera letra de UNA palabra en mayúscula y el resto en minúscula
+        function capitalizar(palabra) {
+            // charAt(0) = primera letra; slice(1) = desde la segunda hasta el final
+            return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+        }
+
+        function capitalizarFrase() {
+            let frase = document.getElementById("frase").value;
+            // Partimos la frase en palabras
+            let palabras = frase.split(" ");
+
+            // Recorremos cada palabra y la sustituimos por su versión capitalizada
+            for (let i = 0; i < palabras.length; i++) {
+                palabras[i] = capitalizar(palabras[i]);
+            }
+
+            // Volvemos a unir las palabras con espacios
+            document.getElementById("result").innerHTML = palabras.join(" ");
+            // OTRA FORMA: palabras.map(capitalizar).join(" ")
+        }
+    </script>
+</body>
+
+</html>

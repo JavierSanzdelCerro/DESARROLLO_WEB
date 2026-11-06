@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 12  (Ejercicios de fechas — Usa objetos Date)
+  ENUNCIADO:
+  Crea un script en el que se pida la fecha de nacimiento y devuelva la fecha en formato: dd-mm-aaaa, es decir, 26-11-2015.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 12</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        <p>Inserte su fecha de nacimiento:</p>
+        Día: <input type="text" id="dia" size="1"> Mes: <input type="text" id="mes" size="1"> Año: <input type="text" id="anyo" size="2"><br><br>
+        <input type="submit" value="Enviar" onclick="formatearFecha(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        // Añade un 0 delante si el número tiene una sola cifra (5 → "05")
+        function dosCifras(n) {
+            return String(n).padStart(2, "0");
+        }
+
+        function formatearFecha() {
+            let dia = parseInt(document.getElementById("dia").value);
+            // OJO: en Date los meses van de 0 (enero) a 11 (diciembre), por eso restamos 1
+            let mes = parseInt(document.getElementById("mes").value) - 1;
+            let anyo = parseInt(document.getElementById("anyo").value);
+
+            // new Date(año, mes, día) crea la fecha concreta
+            let fecha = new Date(anyo, mes, dia);
+
+            // getDate() = día del mes, getMonth() = mes (0-11, por eso +1), getFullYear() = año con 4 cifras
+            // CORREGIDO: se añade el 0 delante para que salga 05-03-2015 y no 5-3-2015
+            document.getElementById("result").innerHTML = "Su fecha de nacimiento es: "
+                + dosCifras(fecha.getDate()) + "-" + dosCifras(fecha.getMonth() + 1) + "-" + fecha.getFullYear();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[ ... mismo array que en ej16.html ... ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  VARIANTE: resalta en amarillo la COLUMNA del día de hoy (si es fin de semana, lo avisa).
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 16 (marcando hoy)</title>
+</head>
+
+<body>
+    <script>
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SASP"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+        ];
+
+        function formatoHora(d) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            if (h < 10) { h = "0" + h; }
+            if (m < 10) { m = "0" + m; }
+            return h + ":" + m;
+        }
+
+        // PARTE NUEVA: ¿qué columna es hoy?
+        // getDay(): 0 = domingo, 1 = lunes ... 5 = viernes, 6 = sábado
+        // Restando 1: lunes → columna 0, martes → 1 ... viernes → 4
+        let columnaHoy = new Date().getDay() - 1;
+        // Domingo da -1 y sábado da 5: ninguno es una columna válida (0 a 4)
+        if (columnaHoy < 0 || columnaHoy > 4) {
+            document.write("<p>Hoy es fin de semana, no hay clase 🎉</p>");
+        }
+
+        let inicio = new Date();
+        inicio.setHours(15, 45, 0, 0);
+
+        document.write("<table border='1'>");
+
+        // Cabecera: también resaltamos el día de hoy
+        let letras = ["L", "M", "X", "J", "V"];
+        document.write("<tr><th></th>");
+        for (let c = 0; c < letras.length; c++) {
+            if (c === columnaHoy) {
+                document.write("<th style='background-color: yellow;'>" + letras[c] + "</th>");
+            } else {
+                document.write("<th>" + letras[c] + "</th>");
+            }
+        }
+        document.write("</tr>");
+
+        for (let f = 0; f < horario.length; f++) {
+            let esRecreo = horario[f][0] === "RECREO";
+            let duracion = esRecreo ? 15 : 50;
+
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+            for (let c = 0; c < horario[f].length; c++) {
+                // Si la columna es la de hoy, la celda se pinta de amarillo
+                if (c === columnaHoy) {
+                    document.write("<td style='background-color: yellow;'>" + horario[f][c] + "</td>");
+                } else {
+                    document.write("<td>" + horario[f][c] + "</td>");
+                }
+            }
+            document.write("</tr>");
+
+            inicio = new Date(fin);
+            if (!esRecreo && f + 1 < horario.length && horario[f + 1][0] !== "RECREO") {
+                inicio.setMinutes(inicio.getMinutes() + 5);
+            }
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+
+</html>

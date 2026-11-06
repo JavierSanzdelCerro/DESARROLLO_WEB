@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 4
+  ENUNCIADO:
+  Crea un script que tenga definidas dos variables con datos numéricos. Pregunta al usuario la operación que quiere realizar y en función de dicha operación escribe en la página el resultado, indicando toda la operación. Impleméntalo con un if y luego con un Switch.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 4</title>
+</head>
+
+<body>
+    <script>
+        // Las dos variables numéricas fijas que pide el enunciado
+        let numero1 = 3;
+        let numero2 = 4;
+        // El usuario elige si quiere verlo resuelto con if o con switch
+        let forma = prompt("¿Cómo lo resuelvo? (if, switch)");
+        let operacion = prompt("¿Qué operación quieres? (suma, resta, multiplicacion o division)");
+
+        if (forma == "if") {
+            // VERSIÓN IF: se comprueba cada caso por separado
+            if (operacion == "suma") {
+                document.write(numero1 + " + " + numero2 + " = " + (numero1 + numero2));
+            } else if (operacion == "resta") {
+                document.write(numero1 + " - " + numero2 + " = " + (numero1 - numero2));
+            } else if (operacion == "multiplicacion") {
+                document.write(numero1 + " * " + numero2 + " = " + (numero1 * numero2));
+            } else if (operacion == "division") {
+                document.write(numero1 + " / " + numero2 + " = " + (numero1 / numero2));
+            }
+            document.write("  (SE HA REALIZADO CON IF)");
+        } else {
+            // VERSIÓN SWITCH: compara 'operacion' con cada case usando ===
+            switch (operacion) {
+                case "suma":
+                    document.write(numero1 + " + " + numero2 + " = " + (numero1 + numero2));
+                    break; // sin break seguiría ejecutando el siguiente case
+                case "resta":
+                    document.write(numero1 + " - " + numero2 + " = " + (numero1 - numero2));
+                    break;
+                case "multiplicacion":
+                    document.write(numero1 + " * " + numero2 + " = " + (numero1 * numero2));
+                    break;
+                case "division":
+                    document.write(numero1 + " / " + numero2 + " = " + (numero1 / numero2));
+                    break;
+            }
+            document.write("  (SE HA REALIZADO CON SWITCH)");
+        }
+        // OJO: los paréntesis en (numero1 + numero2) son necesarios; sin ellos "3 + 4 = " + 3 + 4 daría "34"
+    </script>
+</body>
+
+</html>

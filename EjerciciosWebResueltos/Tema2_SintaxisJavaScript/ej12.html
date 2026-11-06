@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 12
+  ENUNCIADO:
+  Crea un script para que muestre en pantalla la siguiente imagen. Ojo ha de ir todo en una única cadena.
+
+  Hola mundo! Que fácil es incluir ‘comillas simples’ y “comillas dobles”
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 12</title>
+</head>
+
+<body>
+    <script>
+        // La cadena va entre comillas dobles, así que las comillas de DENTRO hay que "escaparlas" con \
+        // \' → comilla simple literal    \" → comilla doble literal
+        let cadena = "Hola mundo! Que fácil es incluir \'comillas simples\' y \"comillas dobles\"";
+        alert(cadena);
+        document.write(cadena);
+        // OTRA FORMA: con template literals (comillas invertidas `) no hace falta escapar ' ni "
+    </script>
+</body>
+
+</html>

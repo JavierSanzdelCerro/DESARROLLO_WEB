@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 6  (Ejercicios de cadenas)
+  ENUNCIADO:
+  Crear un script que compruebe si un correo electrónico es correcto:
+  Y caso de serlo muestre:
+  - el nombre de usuario
+  - el nombre de dominio
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 6</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        Dirección Mail: <input type="text" id="mail">
+        <input type="submit" value="Enviar" onclick="comprobarMail(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        function comprobarMail() {
+            let dir = document.getElementById("mail").value.trim();
+
+            // indexOf devuelve la posición de la PRIMERA aparición, o -1 si no existe
+            let posArroba = dir.indexOf("@");
+            // CORREGIDO: antes se buscaba el primer "." y fallaba con "juan.perez@gmail.com"
+            // lastIndexOf busca la ÚLTIMA aparición (el punto del dominio)
+            let posPunto = dir.lastIndexOf(".");
+
+            // Reglas: hay @, no está al principio, solo hay una @, y el punto va después de la @ (no pegado) y no al final
+            let valido = posArroba > 0
+                && posArroba === dir.lastIndexOf("@")
+                && posPunto > posArroba + 1
+                && posPunto < dir.length - 1;
+
+            if (valido) {
+                // substring(inicio, fin) → desde 'inicio' hasta 'fin' SIN incluirlo
+                let usuario = dir.substring(0, posArroba);
+                let dominio = dir.substring(posArroba + 1);
+                document.getElementById("result").innerHTML =
+                    "Es válido. Usuario: " + usuario + " | Dominio: " + dominio;
+            } else {
+                document.getElementById("result").innerHTML = "No es válido.";
+            }
+        }
+    </script>
+</body>
+
+</html>

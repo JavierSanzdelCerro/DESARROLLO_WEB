@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 10  (Ejercicios de cadenas)
+  ENUNCIADO:
+  Crear un script que compruebe una fecha en formato dd-mm-aaaa es correcta. No uses un objeto Date.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 10</title>
+</head>
+
+<body>
+    <form>
+        <br>
+        Inserte la fecha (dd-mm-aaaa): <input type="text" id="fecha">
+        <input type="submit" value="Enviar" onclick="comprobarValFecha(); return false;"><br><br>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        const ANYO_MAX = 9999;
+        const ANYO_MIN = 1000;
+
+        // Bisiesto: divisible entre 4 y no entre 100, o divisible entre 400
+        function esBisiesto(year) {
+            return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+        }
+
+        // Devuelve true si día, mes y año forman una fecha real
+        function fechaValida(d, m, y) {
+            // CORREGIDO: con letras (NaN) todas las comparaciones dan false y la fecha salía "válida"
+            if (isNaN(d) || isNaN(m) || isNaN(y)) return false;
+            if (y > ANYO_MAX || y < ANYO_MIN) return false;
+            if (m < 1 || m > 12) return false;
+            if (d < 1 || d > 31) return false;
+
+            // Febrero: 29 días si es bisiesto, 28 si no
+            if (m == 2) {
+                if (esBisiesto(y)) {
+                    return d <= 29;
+                } else {
+                    return d <= 28;
+                }
+            }
+            // Abril, junio, septiembre y noviembre tienen 30 días
+            if (m == 4 || m == 6 || m == 9 || m == 11) {
+                return d <= 30;
+            }
+            return true;
+        }
+
+        function comprobarValFecha() {
+            let fecha = document.getElementById("fecha").value;
+            // split("-") separa "26-11-2015" en ["26", "11", "2015"]
+            let partes = fecha.split("-");
+
+            // Si no hay exactamente 3 partes, el formato no es dd-mm-aaaa
+            if (partes.length === 3 && fechaValida(parseInt(partes[0]), parseInt(partes[1]), parseInt(partes[2]))) {
+                document.getElementById("result").innerHTML = "La fecha es válida";
+            } else {
+                document.getElementById("result").innerHTML = "La fecha no es válida";
+            }
+        }
+    </script>
+</body>
+
+</html>

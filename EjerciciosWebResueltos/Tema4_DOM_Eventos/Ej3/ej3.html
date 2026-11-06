@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+  TEMA 4 · EJERCICIO 3
+  ENUNCIADO:
+  Haz un programa que cree 100 elementos “checkbox” con números aleatorios. Además, la página tendrá un botón “Marcar todos” y un botón “Desmarcar todos”.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 4 - Ejercicio 3</title>
+    <script src="ej3.js"></script>
+</head>
+
+<body>
+    <!-- CORREGIDO: faltaba type="button"; sin él, un <input> es una caja de TEXTO, no un botón -->
+    <input type="button" id="marcar" value="Marcar todos">
+    <input type="button" id="desmarcar" value="Desmarcar todos">
+    <!-- Contenedor donde se meterán los 100 checkbox -->
+    <div id="contenedor"></div>
+</body>
+
+</html>

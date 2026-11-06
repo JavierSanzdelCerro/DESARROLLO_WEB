@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[ ... mismo array que en ej16.html ... ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  VARIANTE: la cabecera muestra el nombre del día Y SU FECHA real de la semana actual (Lunes 02/11, Martes 03/11...).
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 16 (con fechas)</title>
+</head>
+
+<body>
+    <script>
+        // Array bidimensional: cada fila es una franja, cada columna un día (L a V)
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SASP"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+        ];
+
+        let nombresDias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+
+        // Añade un 0 delante si hace falta (5 → "05")
+        function dosCifras(n) {
+            if (n < 10) { return "0" + n; }
+            return "" + n;
+        }
+
+        // Devuelve una fecha como texto "HH:MM"
+        function formatoHora(d) {
+            return dosCifras(d.getHours()) + ":" + dosCifras(d.getMinutes());
+        }
+
+        // PARTE NUEVA: calcular la fecha del LUNES de esta semana
+        let hoy = new Date();
+        // getDay(): 0 = domingo ... 6 = sábado; este truco da cuántos días han pasado desde el lunes (igual que en el calendario Ej5)
+        let diasDesdeLunes = (hoy.getDay() + 6) % 7;
+        let lunes = new Date(hoy);                       // copia de hoy
+        lunes.setDate(hoy.getDate() - diasDesdeLunes);   // retrocedemos hasta el lunes
+
+        document.write("<table border='1'>");
+
+        // Cabecera: primera celda vacía (columna de horas) y luego un día por columna
+        document.write("<tr><th></th>");
+        for (let d = 0; d < 5; d++) {
+            let fechaDia = new Date(lunes);
+            // setDate suma días; si se pasa de fin de mes, Date cambia de mes solo (31/10 + 1 = 01/11)
+            fechaDia.setDate(lunes.getDate() + d);
+            document.write("<th>" + nombresDias[d] + "<br>" + dosCifras(fechaDia.getDate()) + "/" + dosCifras(fechaDia.getMonth() + 1) + "</th>");
+        }
+        document.write("</tr>");
+
+        // Hora de inicio de la primera clase
+        let inicio = new Date();
+        inicio.setHours(15, 45, 0, 0);
+
+        // Igual que la solución base: calculamos la hora de cada franja
+        for (let f = 0; f < horario.length; f++) {
+            let esRecreo = horario[f][0] === "RECREO";
+            let duracion = esRecreo ? 15 : 50; // operador ternario: condición ? siTrue : siFalse
+
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+            for (let c = 0; c < horario[f].length; c++) {
+                document.write("<td>" + horario[f][c] + "</td>");
+            }
+            document.write("</tr>");
+
+            // Siguiente franja: 5 min de pausa salvo alrededor del recreo
+            inicio = new Date(fin);
+            if (!esRecreo && f + 1 < horario.length && horario[f + 1][0] !== "RECREO") {
+                inicio.setMinutes(inicio.getMinutes() + 5);
+            }
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+
+</html>

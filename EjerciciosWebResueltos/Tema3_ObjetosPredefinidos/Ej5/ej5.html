@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 5  (Ejercicios de arrays)
+  ENUNCIADO:
+  Crea un calendario del mes que le pidas al usuario.
+  Marca en color rojo los días festivos. Guarda los festivos en un array doble indexado por el número del mes (0 a 11), así:
+  Este array nos dice que en enero hay 2 festivos, el 1 Y el 6 de enero. En febrero, ninguno
+  Array de festivos de 2025:
+          var festivos = [[1,6],[],[],[17,18,23],[1],[],[],[15],[],[12],[1],[6,8,25]];
+
+  SOLUCIÓN BASE: calendario de 2026, festivos en rojo, semana de lunes a domingo.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 3 - Ejercicio 5</title>
+</head>
+
+<body>
+
+    <script>
+        // LE PIDO AL USUARIO EL NUMERO DEL MES
+        let mesUsuario = parseInt(prompt("Dime un mes del año EN NUMERO y te sacaré el calendario de este"));
+
+        // BUCLE PARA QUE ME ESCRIBA BIEN UN MES ENTRE 1-12 Y QUE NO SEA TEXTO
+        while (isNaN(mesUsuario) || mesUsuario > 12 || mesUsuario < 1) {
+            mesUsuario = parseInt(prompt("Dime un mes del año EN NUMERO y te sacaré el calendario de este (El formato que has escrito antes es invalido)"));
+        }
+
+        // LISTA DE FESTIVOS DE ESTE AÑO (2026)
+        let festivos = [
+            [1, 6],     // 0 enero
+            [],         // 1 febrero
+            [],         // 2 marzo
+            [3, 23],    // 3 abril
+            [1],        // 4 mayo
+            [],         // 5 junio
+            [],         // 6 julio
+            [15],       // 7 agosto
+            [],         // 8 septiembre
+            [12],       // 9 octubre
+            [2],        // 10 noviembre
+            [7, 8, 25]  // 11 diciembre
+        ];
+
+        // COMO EL ARRAY EMPIEZA EN 0 Y EL USUARIO ESCRIBE DEL 1-12 LO PASO PARA QUE FUNCIONE
+        let numeroMesParaArray = mesUsuario - 1;
+
+        // COJO EL EL MES QUE ME ESCRIBE EL USUARIO DESDE EL PRIMER DIA
+        let fecha = new Date(2026, numeroMesParaArray, 1);
+        // COJO EL NUMERO DE DIA EN EL QUE EMPIEZA EL MES
+        let primerDiaMes = fecha.getDay();
+
+        // CON ESTE CALCULO SACO LOS HUECOS DE LA SEMANA LIBRES HASTA QUE EMPIEZA EL MES
+        let huecos = (primerDiaMes + 6) % 7;
+        // PONGO EL MES SIGUIENTE EN DIA '0' PORQUE ASÍ ME DICE CUANTOS DIAS TIENE EL MES ANTERIOR (EL ESCOGIDO POR EL USUARIO)
+        let diasMes = new Date(2026, mesUsuario, 0).getDate();
+
+        document.write("<table>"); // CREACIÓN DE LA TABLA
+        document.write("<tr>"); // ABRO LA PRIMERA FILA (CABECERA)
+
+        document.write("<th>L</th>");
+        document.write("<th>M</th>");
+        document.write("<th>X</th>");
+        document.write("<th>J</th>");
+        document.write("<th>V</th>");
+        document.write("<th>S</th>");
+        document.write("<th>D</th>");
+
+        document.write("</tr>"); // Y LA CIERRO
+
+        // AQUI EMPEZARÁN LOS DIAS
+        document.write("<tr>")
+
+        // ESCRIBE LOS PRIMEROS HUECOS QUE HAY LIBRES DEL MES
+        for (let i = 1; i <= huecos; i++) {
+            document.write("<td> </td>");
+        }
+
+        // ESCRIBE LOS DIAS DESDE EL 1 HASTA EL ULTIMO DEL MES
+        for (let n = 1; n <= diasMes; n++) {
+            // PARA SACAR EN ROJO LOS DIAS FESTIVOS (EN ROJO), SI NO HAY LOS ESCRIBO NORMAL
+            if (festivos[numeroMesParaArray].includes(n) ) { // si me pide tambén los domingos en rojo --> (huecos + n) % 7 === 0
+                document.write("<td style='color: red;'>" + n + "</td>");
+            }else{
+                document.write("<td>" + n + "</td>"); 
+            }
+
+            // SI LLEGA AL FINAL DE LA SEMANA (7 O MULTIPLO DE 7) SE PASA DE LINEA CERRANDO LA FILA
+            if ((huecos + n) % 7 === 0) {
+                document.write("</tr><tr>");
+            }
+        }
+
+
+
+        document.write("</tr>");      // CIERRA LA ÚLTIMA FILA DE DÍAS
+        document.write("</table>");   // CIERRA LA TABLA
+
+    </script>
+
+</body>
+
+</html>

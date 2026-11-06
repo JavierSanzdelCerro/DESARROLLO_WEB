@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+  TEMA 2 · EJERCICIO 2
+  ENUNCIADO:
+  Crea un script que pida al usuario un número y muestre en la página un párrafo indicando si el número introducido es par o impar.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 2 - Ejercicio 2</title>
+</head>
+
+<body>
+    <script>
+        // parseInt() convierte el texto del prompt en número entero
+        let num = parseInt(prompt("Dime un número"));
+
+        // El operador % da el resto: si el resto de dividir entre 2 es 0, es par
+        if (num % 2 == 0) {
+            document.write("<p>El número " + num + " es PAR</p>");
+        } else {
+            document.write("<p>El número " + num + " es IMPAR</p>");
+        }
+    </script>
+</body>
+
+</html>
