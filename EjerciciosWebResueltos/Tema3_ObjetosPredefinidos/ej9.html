@@ -22,8 +22,8 @@
     <script>
         // Pone la primera letra de UNA palabra en mayúscula y el resto en minúscula
         function capitalizar(palabra) {
-            // charAt(0) = primera letra; slice(1) = desde la segunda hasta el final
-            return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+            // charAt(0) = primera letra; substring(1) = desde la segunda hasta el final
+            return palabra.charAt(0).toUpperCase() + palabra.substring(1).toLowerCase();
         }
 
         function capitalizarFrase() {

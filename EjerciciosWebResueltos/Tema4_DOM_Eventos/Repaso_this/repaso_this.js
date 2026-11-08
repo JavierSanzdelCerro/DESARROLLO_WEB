@@ -28,25 +28,29 @@ window.onload = function () {
     // CASO 4: addEventListener con función FLECHA → 'this' NO es el elemento
     // Las flechas no tienen 'this' propio: usan el de fuera (aquí, window)
     document.getElementById("b4").addEventListener("click", (evento) => {
-        // Con flechas, el elemento se saca del objeto event: evento.currentTarget
-        escribir("Caso 4 → this es " + this + " | evento.currentTarget.id = " + evento.currentTarget.id);
+        // Con flechas, el elemento se saca del objeto event: evento.target
+        escribir("Caso 4 → this es " + this + " | evento.target.id = " + evento.target.id);
     });
 
-    // CASO 5: this (o currentTarget) = elemento que TIENE el evento; event.target = elemento CLICADO
+    // CASO 5: this = elemento que TIENE el evento; evento.target = elemento CLICADO
     document.getElementById("caja").onclick = function (evento) {
-        escribir("Caso 5 → this.id = " + this.id + " | evento.target.id = " + (evento.target.id || "(caja)"));
+        escribir("Caso 5 → this.id = " + this.id + " | evento.target.id = " + evento.target.id);
         // Si clicas en el span: this = caja (tiene el onclick), target = dentro (donde clicaste)
     };
 
-    // CASO 6: 'this' dentro de un método = el objeto que llama al método
-    let alumno = {
-        nombre: "Javier",
-        modulo: "DWEC",
-        presentarse: function () {
+    // CASO 6: 'this' dentro de una clase = el objeto con el que se llama al método
+    class Alumno {
+        constructor(nombre, modulo) {
+            // this = el objeto nuevo que se está creando con new
+            this.nombre = nombre;
+            this.modulo = modulo;
+        }
+        presentarse() {
             // this = alumno, porque se llama como alumno.presentarse()
             return "Soy " + this.nombre + " y estudio " + this.modulo;
         }
-    };
+    }
+    let alumno = new Alumno("Javier", "DWEC");
     document.getElementById("b6").onclick = function () {
         escribir("Caso 6 → " + alumno.presentarse());
     };
@@ -56,7 +60,7 @@ window.onload = function () {
 // onclick="f(this)" en HTML              → pasa el elemento como parámetro
 // elem.onclick = function(){ this }      → this = elem
 // elem.addEventListener("x", function)   → this = elem
-// elem.addEventListener("x", () => {})   → this NO es elem → usa evento.currentTarget
+// elem.addEventListener("x", () => {})   → this NO es elem → usa evento.target
 // evento.target                          → el elemento EXACTO donde ocurrió (puede ser un hijo)
-// objeto.metodo()                        → this = objeto
+// objeto.metodo() (clases)               → this = objeto
 // Dentro de un setTimeout(function)      → this se pierde → guárdalo antes: let el = this;

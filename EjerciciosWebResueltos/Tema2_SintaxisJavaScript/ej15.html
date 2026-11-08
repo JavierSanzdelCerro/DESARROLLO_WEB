@@ -21,9 +21,9 @@
             vPalabras[i] = prompt("Inserte palabra " + (i + 1));
         }
 
-        // sort() ordena el array; localeCompare ordena bien tildes y mayúsculas/minúsculas en español
-        // (con sort() a secas "Zorro" iría antes que "abeja" porque las mayúsculas van primero)
-        vPalabras.sort((a, b) => a.localeCompare(b));
+        // sort() ordena alfabéticamente y MODIFICA el propio array
+        // OJO: las mayúsculas van antes que las minúsculas ("Zorro" saldría antes que "abeja")
+        vPalabras.sort();
 
         // join(", ") une los elementos del array en un texto separado por comas
         document.write(vPalabras.join(", "));

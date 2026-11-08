@@ -34,7 +34,7 @@
             [1, 6],     // 0 enero
             [],         // 1 febrero
             [],         // 2 marzo
-            [3, 23],    // 3 abril
+            [2, 3, 23], // 3 abril (Jueves Santo, Viernes Santo y San Jorge)
             [1],        // 4 mayo
             [],         // 5 junio
             [],         // 6 julio
@@ -44,6 +44,17 @@
             [2],        // 10 noviembre
             [7, 8, 25]  // 11 diciembre
         ];
+
+        // FUNCION QUE MIRA SI UN DIA ESTA EN LA LISTA DE FESTIVOS DE ESE MES
+        // RECORRO LA LISTA Y SI ALGUNO COINCIDE DEVUELVO true; SI ACABA EL BUCLE SIN ENCONTRARLO, false
+        function esFestivo(listaFestivos, dia) {
+            for (let i = 0; i < listaFestivos.length; i++) {
+                if (listaFestivos[i] === dia) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         // COMO EL ARRAY EMPIEZA EN 0 Y EL USUARIO ESCRIBE DEL 1-12 LO PASO PARA QUE FUNCIONE
         let numeroMesParaArray = mesUsuario - 1;
@@ -82,7 +93,7 @@
         // ESCRIBE LOS DIAS DESDE EL 1 HASTA EL ULTIMO DEL MES
         for (let n = 1; n <= diasMes; n++) {
             // PARA SACAR EN ROJO LOS DIAS FESTIVOS (EN ROJO), SI NO HAY LOS ESCRIBO NORMAL
-            if (festivos[numeroMesParaArray].includes(n) ) { // si me pide tambén los domingos en rojo --> (huecos + n) % 7 === 0
+            if (esFestivo(festivos[numeroMesParaArray], n)) { // si me pide tambén los domingos en rojo --> (huecos + n) % 7 === 0
                 document.write("<td style='color: red;'>" + n + "</td>");
             }else{
                 document.write("<td>" + n + "</td>"); 

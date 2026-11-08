@@ -21,12 +21,13 @@
 
     <script>
         function invertirNomApe() {
-            // split(/\s+/) parte por uno o más espacios → ["Juan", "Pérez", "García"]
-            let partes = document.getElementById("nomape").value.trim().split(/\s+/);
+            // split(" ") parte por los espacios → ["Juan", "Pérez", "García"]
+            let partes = document.getElementById("nomape").value.split(" ");
 
-            // shift() saca y devuelve el PRIMER elemento (el nombre); en el array quedan los apellidos
-            let nombre = partes.shift();
-            let apellidos = partes.join(" ");
+            // La primera palabra es el nombre
+            let nombre = partes[0];
+            // slice(1) = desde la posición 1 hasta el final → los apellidos, que volvemos a unir con espacios
+            let apellidos = partes.slice(1).join(" ");
 
             document.getElementById("result").innerHTML = apellidos + ", " + nombre;
         }

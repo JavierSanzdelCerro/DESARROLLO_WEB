@@ -27,8 +27,8 @@
             let letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q',
                 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
 
-            // .value lee lo escrito en el input; trim() quita espacios y toUpperCase() pasa la letra a mayúscula
-            let dni = document.getElementById("dni").value.trim().toUpperCase();
+            // .value lee lo escrito en el input; toUpperCase() pasa la letra a mayúscula (12345678z → 12345678Z)
+            let dni = document.getElementById("dni").value.toUpperCase();
             let resultado = document.getElementById("resultado");
 
             // CORREGIDO: antes solo calculaba la letra; el enunciado pide decir si el DNI es VÁLIDO
@@ -41,8 +41,9 @@
             let numero = dni.substring(0, 8);
             let letra = dni.charAt(8);
 
-            // Comprobamos que la parte numérica sean solo cifras
-            if (isNaN(numero)) {
+            // CORREGIDO: isNaN daba por buenos "-1234567" o "1e345678" (JS los entiende como números)
+            // Expresión regular (Tema 5): ^ inicio, \d{8} exactamente 8 cifras, $ final → solo dígitos
+            if (!/^\d{8}$/.test(numero)) {
                 resultado.innerHTML = "No válido: los 8 primeros caracteres deben ser números";
                 return;
             }

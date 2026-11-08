@@ -26,6 +26,7 @@ function drop(ev) {
         // Cambiando el atributo src cambiamos la imagen que se ve
         document.getElementById("papelera").src = "papeleraLLena.jpg";
         // La bola desaparece de la página (ya está "dentro" de la papelera)
-        document.getElementById("bola").remove();
+        let bola = document.getElementById("bola");
+        bola.parentNode.removeChild(bola);
     }
 }

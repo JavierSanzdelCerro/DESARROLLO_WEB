@@ -2,8 +2,8 @@
 
 // El navegador pasa AUTOMÁTICAMENTE el objeto event como primer parámetro del manejador
 function mostrarPosicion(evento) {
-    // clientX / clientY = posición respecto a la parte VISIBLE de la ventana
-    // pageX / pageY = posición respecto a la página entera (cambia si haces scroll)
+    // clientX / clientY = posición respecto a la ventana del NAVEGADOR
+    // (screenX / screenY sería respecto a la PANTALLA entera del ordenador)
     document.getElementById("p1").innerHTML =
         "Posición X: " + evento.clientX + " | Posición Y: " + evento.clientY;
 }

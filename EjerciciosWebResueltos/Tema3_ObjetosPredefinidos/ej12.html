@@ -23,7 +23,10 @@
     <script>
         // Añade un 0 delante si el número tiene una sola cifra (5 → "05")
         function dosCifras(n) {
-            return String(n).padStart(2, "0");
+            if (n < 10) {
+                return "0" + n;
+            }
+            return "" + n; // "" + n convierte el número en texto
         }
 
         function formatearFecha() {

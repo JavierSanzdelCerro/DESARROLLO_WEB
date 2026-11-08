@@ -28,13 +28,12 @@ function insertar() {
 // Elimina el último <li> de la lista
 function borrar() {
     let lista = document.getElementById("miLista");
-    // lastElementChild = el último hijo que sea una etiqueta (ignora espacios/saltos de línea)
-    let ultimo = lista.lastElementChild;
+    // Todos los <li> de la lista (como un array); el último está en la posición length - 1
+    let elementos = lista.getElementsByTagName("li");
 
-    // Si la lista está vacía, ultimo es null y no hacemos nada
-    if (ultimo) {
+    // Si la lista está vacía no hay nada que borrar
+    if (elementos.length > 0) {
         // Para borrar un nodo se le pide a su PADRE que lo quite
-        lista.removeChild(ultimo);
-        // OTRA FORMA: ultimo.remove();
+        lista.removeChild(elementos[elementos.length - 1]);
     }
 }

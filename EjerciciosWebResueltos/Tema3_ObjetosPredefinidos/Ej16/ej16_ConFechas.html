@@ -70,7 +70,10 @@
         // Igual que la solución base: calculamos la hora de cada franja
         for (let f = 0; f < horario.length; f++) {
             let esRecreo = horario[f][0] === "RECREO";
-            let duracion = esRecreo ? 15 : 50; // operador ternario: condición ? siTrue : siFalse
+            let duracion = 50;
+            if (esRecreo) {
+                duracion = 15;
+            }
 
             let fin = new Date(inicio);
             fin.setMinutes(fin.getMinutes() + duracion);

@@ -13,15 +13,26 @@
 
 <body>
     <script>
-        // || "" evita un error si el usuario pulsa Cancelar (prompt devolvería null)
-        let personaje = (prompt("Dime un personaje de Star Wars") || "").toUpperCase();
+        let personaje = prompt("Dime un personaje de Star Wars");
+        // Pasamos a MAYÚSCULAS para que "vader", "Vader" y "VADER" se traten igual
+        // (si pulsa Cancelar, prompt devuelve null y null no tiene toUpperCase → lo comprobamos antes)
+        if (personaje != null) {
+            personaje = personaje.toUpperCase();
+        }
 
-        // Guardamos los personajes ya en MAYÚSCULAS para comparar sin importar cómo escriba el usuario
+        // Los personajes guardados ya en MAYÚSCULAS
         let personajes = ["C3PO", "R2", "VADER", "LUCK"];
 
         // CORREGIDO: antes el bucle hacía break en el primer fallo y solo reconocía "C3PO"
-        // includes() devuelve true si el array contiene ese valor
-        if (personajes.includes(personaje)) {
+        // Recorremos TODO el array; si alguno coincide, marcamos la bandera
+        let encontrado = false;
+        for (let i = 0; i < personajes.length; i++) {
+            if (personajes[i] === personaje) {
+                encontrado = true;
+            }
+        }
+
+        if (encontrado) {
             document.write(personaje + " es un personaje de Star Wars");
         } else {
             document.write(personaje + " NO es un personaje de Star Wars");

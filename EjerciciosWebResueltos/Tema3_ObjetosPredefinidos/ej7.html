@@ -26,17 +26,40 @@
             return str.split("").reverse().join("");
         }
 
-        function comprobarPali() {
-            let texto = document.getElementById("cadena").value;
-
-            // Expresión regular /\s/g = todos los espacios en blanco → los quitamos
-            texto = texto.replace(/\s/g, "");
+        // Deja el texto listo para comparar: minúsculas, sin espacios, sin signos y sin tildes
+        // "Allí ves Sevilla." → "allivessevilla"
+        function limpiarTexto(texto) {
             texto = texto.toLowerCase();
-            // CORREGIDO: hay que quitar tildes, si no "Allí ves Sevilla" (el ejemplo) no daba palíndromo
-            // normalize("NFD") separa "í" en "i" + tilde, y el replace borra las tildes
-            texto = texto.normalize("NFD").replace(/[̀-ͯ]/g, "");
-            // Quitamos signos de puntuación (el punto final del ejemplo, comas...)
-            texto = texto.replace(/[.,;:¡!¿?]/g, "");
+            // Cada vocal con tilde está en la MISMA posición que su versión sin tilde (á ↔ a, é ↔ e...)
+            let conTilde = "áéíóúü";
+            let sinTilde = "aeiouu";
+            // Caracteres que NO cuentan para el palíndromo
+            let ignorar = " .,;:¡!¿?";
+            let limpio = "";
+
+            // Recorremos letra a letra y vamos construyendo el texto limpio
+            for (let i = 0; i < texto.length; i++) {
+                let letra = texto.charAt(i);
+
+                // indexOf da -1 si NO la encuentra → si la encuentra en 'ignorar', nos la saltamos
+                if (ignorar.indexOf(letra) !== -1) {
+                    continue; // continue salta a la siguiente vuelta del bucle sin añadir nada
+                }
+
+                // Si es vocal con tilde, la cambiamos por la de la misma posición en 'sinTilde'
+                let pos = conTilde.indexOf(letra);
+                if (pos !== -1) {
+                    letra = sinTilde.charAt(pos);
+                }
+
+                limpio += letra;
+            }
+            return limpio;
+        }
+
+        function comprobarPali() {
+            // CORREGIDO: hay que quitar tildes y el punto, si no "Allí ves Sevilla." (el ejemplo) no daba palíndromo
+            let texto = limpiarTexto(document.getElementById("cadena").value);
 
             if (texto == reverseString(texto)) {
                 document.getElementById("result").innerHTML = "Es palíndromo";

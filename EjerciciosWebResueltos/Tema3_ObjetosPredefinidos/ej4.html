@@ -16,10 +16,10 @@
         let nombres = ["Julián", "Rodrigo", "Mateo", "Valdomero"];
 
         // sort() MODIFICA el array original (no crea uno nuevo)
-        nombres.sort((a, b) => a.localeCompare(b));
+        nombres.sort();
 
-        // [...nombres] hace una COPIA; si no, reverse() también daría la vuelta a 'nombres'
-        let nombresInv = [...nombres].reverse();
+        // slice() hace una COPIA; si no, reverse() también daría la vuelta a 'nombres'
+        let nombresInv = nombres.slice().reverse();
 
         document.write("Nombres ordenados: " + nombres.join(", ") + "<br><br>");
         document.write("Nombres en orden inverso: " + nombresInv.join(", "));

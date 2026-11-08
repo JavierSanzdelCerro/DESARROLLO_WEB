@@ -15,13 +15,19 @@
     <script>
         let numeros = [4, 0, 3, 4, 7, 3, 5, 8, 1, 8, 8, 0, 2, 3, 1, 2, 5, 7, 3, 2, 5, 1];
 
-        // new Set() crea un conjunto, que NO admite repetidos
-        // [...conjunto] (spread) lo vuelve a convertir en array
-        let sinRepetir = [...new Set(numeros)];
+        // slice() sin parámetros devuelve una COPIA del array; así sort() no desordena el original
+        let ordenado = numeros.slice();
+        // sort() ordena como TEXTO ("10" iría antes que "2"), pero aquí todos son de 1 cifra y sale bien
+        ordenado.sort();
 
-        // OJO: sort() sin función ordena como TEXTO (10 iría antes que 2)
-        // (a, b) => a - b ordena de forma numérica de menor a mayor
-        sinRepetir.sort((a, b) => a - b);
+        // Al estar ordenado, los repetidos quedan JUNTOS: [0,0,1,1,1,2...]
+        // Basta con añadir cada número solo si es distinto del anterior
+        let sinRepetir = [];
+        for (let i = 0; i < ordenado.length; i++) {
+            if (i === 0 || ordenado[i] !== ordenado[i - 1]) {
+                sinRepetir.push(ordenado[i]);
+            }
+        }
 
         document.write("Array original: " + numeros.join(" ") + "<br><br>");
         document.write("Sin repetir y ordenado: " + sinRepetir.join(" "));

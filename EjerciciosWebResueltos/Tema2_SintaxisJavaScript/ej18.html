@@ -16,13 +16,10 @@
         let numero = parseInt(prompt("Inserte número:"));
 
         // CORREGIDO: antes era i < numero y no incluía el propio número si era impar
-        for (let i = 1; i <= numero; i++) {
-            // Truco sin %: si i/2 NO es entero (7/2 = 3.5), i es impar
-            if (!Number.isInteger(i / 2)) {
-                document.write(i + " ");
-            }
+        // Sin %: empezamos en 1 (impar) y sumamos de 2 en 2 → 1, 3, 5, 7... siempre impares
+        for (let i = 1; i <= numero; i += 2) {
+            document.write(i + " ");
         }
-        // OTRA FORMA sin %: empezar en 1 y sumar de 2 en 2 → for (let i = 1; i <= numero; i += 2)
     </script>
 </body>
 

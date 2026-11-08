@@ -49,8 +49,8 @@ function marcarCasiPrimos() {
     let celdas = document.getElementsByTagName("td");
 
     for (let i = 0; i < celdas.length; i++) {
-        // textContent = el texto de la celda ("4"); parseInt lo pasa a número
-        let valor = parseInt(celdas[i].textContent);
+        // innerHTML = el contenido de la celda como texto ("4"); parseInt lo pasa a número
+        let valor = parseInt(celdas[i].innerHTML);
         if (esCasiPrimo(valor)) {
             // .style.propiedad cambia el CSS del elemento (background-color → backgroundColor)
             celdas[i].style.backgroundColor = "yellow";

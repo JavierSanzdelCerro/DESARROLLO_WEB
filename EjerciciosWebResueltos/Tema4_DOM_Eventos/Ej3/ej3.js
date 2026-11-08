@@ -22,7 +22,7 @@ function crearCheckbox() {
 
         // <label for="checkN"> → al pulsar el número también se marca el checkbox
         let label = document.createElement("label");
-        label.htmlFor = "check" + i; // en JS el atributo 'for' se llama htmlFor (for es palabra reservada)
+        label.setAttribute("for", "check" + i);
         label.appendChild(document.createTextNode(numero));
 
         contenedor.appendChild(checkbox);
@@ -37,10 +37,13 @@ function cambiarTodos() {
     // 'this' es el botón que disparó el evento → su id nos dice qué hacer
     let marcar = (this.id === "marcar");
 
-    // querySelectorAll usa selectores CSS y devuelve TODOS los elementos que coinciden
-    let checks = document.querySelectorAll("input[type='checkbox']");
-    // forEach recorre la lista; .checked = true/false marca o desmarca
-    checks.forEach(function (check) {
-        check.checked = marcar;
-    });
+    // getElementsByTagName("input") trae TODOS los <input>, también los 2 botones
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        // Por eso filtramos por tipo: solo tocamos los checkbox
+        if (inputs[i].type === "checkbox") {
+            // .checked = true marca, false desmarca
+            inputs[i].checked = marcar;
+        }
+    }
 }

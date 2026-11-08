@@ -56,8 +56,23 @@
 
         document.write("<table border='1'>");
 
-        // Cabecera con los días (la primera celda vacía es la de las horas)
-        document.write("<tr><th></th><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th></tr>");
+        // CORREGIDO: el enunciado pide usar objetos Date para mostrar las FECHAS; antes solo salían las letras
+        // Buscamos el LUNES de esta semana: getDay() da 0 = domingo ... 6 = sábado
+        // (getDay() + 6) % 7 convierte eso en "días que han pasado desde el lunes" (lunes 0 ... domingo 6)
+        let hoy = new Date();
+        let lunes = new Date(hoy);
+        lunes.setDate(hoy.getDate() - (hoy.getDay() + 6) % 7);
+
+        // Cabecera: celda vacía (columna de horas) + un día por columna con su fecha
+        let letrasDias = ["L", "M", "X", "J", "V"];
+        document.write("<tr><th></th>");
+        for (let d = 0; d < 5; d++) {
+            let fechaDia = new Date(lunes);
+            // Si al sumar días nos pasamos de fin de mes, Date salta solo al mes siguiente (31/10 + 1 → 1/11)
+            fechaDia.setDate(lunes.getDate() + d);
+            document.write("<th>" + letrasDias[d] + " " + fechaDia.getDate() + "/" + (fechaDia.getMonth() + 1) + "</th>");
+        }
+        document.write("</tr>");
 
         // PARTE 2: recorro las filas del array
         for (let f = 0; f < horario.length; f++) {

@@ -22,8 +22,11 @@
 
         let nombre = prompt("Dime tu nombre");
         let edad = parseInt(prompt("Dime tu edad"));
-        // toLowerCase() para que "Viernes" y "viernes" se traten igual
-        let dia = (prompt("¿Qué día de la semana quieres viajar? (lunes, martes...)") || "").toLowerCase();
+        let dia = prompt("¿Qué día de la semana quieres viajar? (lunes, martes...)");
+        // toLowerCase() para que "Viernes" y "viernes" se traten igual (si pulsa Cancelar, dia es null)
+        if (dia != null) {
+            dia = dia.toLowerCase();
+        }
 
         let descuento = 0;
         let motivos = ""; // aquí vamos acumulando el texto con los motivos del descuento
@@ -47,11 +50,14 @@
         let sinIva = PRECIO_BASE * (1 - descuento);
         let conIva = sinIva * (1 + IVA);
 
-        // toFixed(2) redondea a 2 decimales para mostrar euros
+        // Redondeo a 2 decimales: x100, redondeo al entero y /100 (12.6225 → 1262.25 → 1262 → 12.62)
+        sinIva = Math.round(sinIva * 100) / 100;
+        conIva = Math.round(conIva * 100) / 100;
+
         document.write("<h3>Billete simple - " + nombre + "</h3>");
         document.write("<p>" + motivos + "</p>");
-        document.write("<p>Precio SIN IVA: " + sinIva.toFixed(2) + " €</p>");
-        document.write("<p>Precio CON IVA: " + conIva.toFixed(2) + " €</p>");
+        document.write("<p>Precio SIN IVA: " + sinIva + " €</p>");
+        document.write("<p>Precio CON IVA: " + conIva + " €</p>");
     </script>
 </body>
 

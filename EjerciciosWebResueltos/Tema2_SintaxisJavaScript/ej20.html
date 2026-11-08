@@ -55,7 +55,10 @@
 
                 // N = cantidad de números posibles en el rango
                 let rango = max - min + 1;
-                let dificultad = (prompt("Elija dificultad: facil / normal / dificil") || "").toLowerCase();
+                let dificultad = prompt("Elija dificultad: facil / normal / dificil");
+                if (dificultad != null) {
+                    dificultad = dificultad.toLowerCase();
+                }
 
                 // Según la dificultad, dividimos el rango entre 2, 4 u 8
                 let divisor;
@@ -87,8 +90,12 @@
                     if (n === secreto) {
                         acertado = true;
                     } else if (divisor !== 8) {
-                        // En fácil y normal damos pista (operador ternario: condición ? siTrue : siFalse)
-                        alert(n < secreto ? "El número secreto es MAYOR" : "El número secreto es MENOR");
+                        // En fácil y normal damos pista
+                        if (n < secreto) {
+                            alert("El número secreto es MAYOR");
+                        } else {
+                            alert("El número secreto es MENOR");
+                        }
                     } else {
                         alert("Has fallado.");
                     }

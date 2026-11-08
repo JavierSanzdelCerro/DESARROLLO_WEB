@@ -39,15 +39,23 @@
         }
 
         // PARTE NUEVA 1: pedir la hora "HH:MM" y separarla con split(":")
+        // El 2º parámetro de prompt es el texto que aparece ya escrito (valor por defecto)
         let horaTexto = prompt("¿A qué hora empieza la primera clase? (HH:MM)", "08:30");
-        let partes = (horaTexto || "").split(":");
+        // CORREGIDO: si pulsa Cancelar, prompt devuelve null y null.split() da error → usamos la hora por defecto
+        if (horaTexto == null) {
+            horaTexto = "08:30";
+        }
+        let partes = horaTexto.split(":");
         let horas = parseInt(partes[0]);
         let minutos = parseInt(partes[1]);
 
         // Repetimos mientras no sea una hora válida
         while (partes.length !== 2 || isNaN(horas) || isNaN(minutos) || horas < 0 || horas > 23 || minutos < 0 || minutos > 59) {
             horaTexto = prompt("Hora no válida. Escribe la hora así: HH:MM", "08:30");
-            partes = (horaTexto || "").split(":");
+            if (horaTexto == null) {
+                horaTexto = "08:30";
+            }
+            partes = horaTexto.split(":");
             horas = parseInt(partes[0]);
             minutos = parseInt(partes[1]);
         }
@@ -69,7 +77,10 @@
         for (let f = 0; f < horario.length; f++) {
             let esRecreo = horario[f][0] === "RECREO";
             // La duración ahora sale de lo que ha escrito el usuario
-            let duracion = esRecreo ? durRecreo : durClase;
+            let duracion = durClase;
+            if (esRecreo) {
+                duracion = durRecreo;
+            }
 
             let fin = new Date(inicio);
             fin.setMinutes(fin.getMinutes() + duracion);

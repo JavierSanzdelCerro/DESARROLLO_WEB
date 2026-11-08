@@ -38,7 +38,7 @@
             [1, 6],     // 0 enero
             [],         // 1 febrero
             [],         // 2 marzo
-            [3, 23],    // 3 abril
+            [2, 3, 23], // 3 abril (Jueves Santo, Viernes Santo y San Jorge)
             [1],        // 4 mayo
             [],         // 5 junio
             [],         // 6 julio
@@ -48,6 +48,17 @@
             [2],        // 10 noviembre
             [7, 8, 25]  // 11 diciembre
         ];
+
+        // Devuelve true si 'dia' está en la lista de festivos de ese mes
+        // (en cuanto lo encuentra hace return, así no sigue recorriendo)
+        function esFestivo(listaFestivos, dia) {
+            for (let i = 0; i < listaFestivos.length; i++) {
+                if (listaFestivos[i] === dia) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         let numeroMesParaArray = mesUsuario - 1;   // mes de 0 a 11
 
@@ -82,7 +93,7 @@
         // Días del mes: rojo si es festivo o domingo
         for (let n = 1; n <= diasMes; n++) {
             // Domingo = primera columna → (huecos + n) % 7 === 1
-            if (festivos[numeroMesParaArray].includes(n) || (huecos + n) % 7 === 1) {
+            if (esFestivo(festivos[numeroMesParaArray], n) || (huecos + n) % 7 === 1) {
                 document.write("<td style='color: red;'>" + n + "</td>");
             } else {
                 document.write("<td>" + n + "</td>");
