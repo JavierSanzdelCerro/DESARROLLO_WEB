@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[ ... mismo array que en ej16.html ... ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  VARIANTE: añadir una COLUMNA más (el sábado).
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 16 (con sábado)</title>
+</head>
+
+<body>
+    <script>
+        // PARTE NUEVA 1: cada fila tiene un 6º elemento, el del sábado
+        // OJO: TODAS las filas deben tener 6, también la del recreo; si a una le falta, esa fila sale más corta
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE", "DWC"],
+            ["DI", "SGE", "AD", "AD", "SGE", "DWC"],
+            ["DI", "SGE", "AD", "AD", "SASP", "DI"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI", "PSP"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI", "PSP"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI", "PROY"]
+        ];
+
+        function formatoHora(d) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            if (h < 10) { h = "0" + h; }
+            if (m < 10) { m = "0" + m; }
+            return h + ":" + m;
+        }
+
+        let inicio = new Date();
+        inicio.setHours(15, 45, 0, 0);
+
+        document.write("<table border='1'>");
+
+        let hoy = new Date();
+        let lunes = new Date(hoy);
+        lunes.setDate(hoy.getDate() - (hoy.getDay() + 6) % 7);
+
+        // PARTE NUEVA 2: añadimos la "S" y el bucle usa letrasDias.length en vez de 5
+        // (con el 5 escrito a mano la cabecera tendría 5 días y las filas 6 asignaturas)
+        let letrasDias = ["L", "M", "X", "J", "V", "S"];
+        document.write("<tr><th></th>");
+        for (let d = 0; d < letrasDias.length; d++) {
+            let fechaDia = new Date(lunes);
+            // El sábado es lunes + 5 días
+            fechaDia.setDate(lunes.getDate() + d);
+            document.write("<th>" + letrasDias[d] + " " + fechaDia.getDate() + "/" + (fechaDia.getMonth() + 1) + "</th>");
+        }
+        document.write("</tr>");
+
+        for (let f = 0; f < horario.length; f++) {
+            let esRecreo = horario[f][0] === "RECREO";
+            let duracion = 50;
+            if (esRecreo) {
+                duracion = 15;
+            }
+
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+            // Este bucle no cambia: horario[f].length ya vale 6, así que saca también el sábado
+            for (let c = 0; c < horario[f].length; c++) {
+                document.write("<td>" + horario[f][c] + "</td>");
+            }
+            document.write("</tr>");
+
+            inicio = new Date(fin);
+            if (!esRecreo && f + 1 < horario.length && horario[f + 1][0] !== "RECREO") {
+                inicio.setMinutes(inicio.getMinutes() + 5);
+            }
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+
+</html>

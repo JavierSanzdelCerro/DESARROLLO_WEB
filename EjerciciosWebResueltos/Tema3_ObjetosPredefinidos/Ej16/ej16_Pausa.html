@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[ ... mismo array que en ej16.html ... ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  VARIANTE: cambiar la PAUSA entre clases (aquí 10 min) o quitarla (pausa = 0).
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 16 (pausa entre clases)</title>
+</head>
+
+<body>
+    <script>
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SASP"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+        ];
+
+        // PARTE NUEVA: minutos de pausa entre dos clases seguidas (en ej16.html eran 5 fijos)
+        // Con 0 las clases van pegadas: sumar 0 minutos no cambia la hora, así que no hace falta otro if
+        let pausa = 10;
+
+        function formatoHora(d) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            if (h < 10) { h = "0" + h; }
+            if (m < 10) { m = "0" + m; }
+            return h + ":" + m;
+        }
+
+        let inicio = new Date();
+        inicio.setHours(15, 45, 0, 0);
+
+        document.write("<table border='1'>");
+
+        // Cabecera con la fecha de cada día de esta semana (igual que ej16.html)
+        let hoy = new Date();
+        let lunes = new Date(hoy);
+        lunes.setDate(hoy.getDate() - (hoy.getDay() + 6) % 7);
+
+        let letrasDias = ["L", "M", "X", "J", "V"];
+        document.write("<tr><th></th>");
+        for (let d = 0; d < 5; d++) {
+            let fechaDia = new Date(lunes);
+            fechaDia.setDate(lunes.getDate() + d);
+            document.write("<th>" + letrasDias[d] + " " + fechaDia.getDate() + "/" + (fechaDia.getMonth() + 1) + "</th>");
+        }
+        document.write("</tr>");
+
+        for (let f = 0; f < horario.length; f++) {
+            let esRecreo = horario[f][0] === "RECREO";
+            let duracion = 50;
+            if (esRecreo) {
+                duracion = 15;
+            }
+
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+            for (let c = 0; c < horario[f].length; c++) {
+                document.write("<td>" + horario[f][c] + "</td>");
+            }
+            document.write("</tr>");
+
+            inicio = new Date(fin);
+            // La pausa solo va entre dos CLASES: ni al salir del recreo ni justo antes de él
+            if (!esRecreo && f + 1 < horario.length && horario[f + 1][0] !== "RECREO") {
+                // CAMBIO: sumamos la variable 'pausa' en vez de 5
+                inicio.setMinutes(inicio.getMinutes() + pausa);
+            }
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+
+</html>

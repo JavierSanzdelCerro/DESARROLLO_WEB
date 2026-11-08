@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+  TEMA 3 · EJERCICIO 16  (Ejercicios combinados)
+  ENUNCIADO:
+  Crea un script que genere un horario similar a este:
+  (En el documento aparece una imagen del horario)
+  let horario=[ ... mismo array que en ej16.html ... ];
+  - Usa un array bidimensional para guardar los datos que vas a mostrar. Sin horas ni días.
+  - Usa objetos Date para mostrar las fechas.
+  - Las horas de la primera columna, se deben de calcular.
+
+  VARIANTE: mover el RECREO a otra fila y poner DOS recreos.
+  Solo cambia el array: el resto del código es igual que ej16.html, porque el recreo
+  se busca por la palabra "RECREO" y no por el número de fila.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tema 3 - Ejercicio 16 (dos recreos)</title>
+</head>
+
+<body>
+    <script>
+        // PARTE NUEVA: el primer recreo pasa a la 3ª fila y se añade otro en la 6ª
+        let horario = [
+            ["IPPE", "PROY", "IPPE", "AD", "SGE"],
+            ["DI", "SGE", "AD", "AD", "SGE"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DI", "SGE", "AD", "AD", "SASP"],
+            ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+            ["RECREO", "RECREO", "RECREO", "RECREO", "RECREO"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+            ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+        ];
+
+        function formatoHora(d) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            if (h < 10) { h = "0" + h; }
+            if (m < 10) { m = "0" + m; }
+            return h + ":" + m;
+        }
+
+        let inicio = new Date();
+        inicio.setHours(15, 45, 0, 0);
+
+        document.write("<table border='1'>");
+
+        // Cabecera con la fecha de cada día de esta semana (igual que ej16.html)
+        let hoy = new Date();
+        let lunes = new Date(hoy);
+        lunes.setDate(hoy.getDate() - (hoy.getDay() + 6) % 7);
+
+        let letrasDias = ["L", "M", "X", "J", "V"];
+        document.write("<tr><th></th>");
+        for (let d = 0; d < 5; d++) {
+            let fechaDia = new Date(lunes);
+            fechaDia.setDate(lunes.getDate() + d);
+            document.write("<th>" + letrasDias[d] + " " + fechaDia.getDate() + "/" + (fechaDia.getMonth() + 1) + "</th>");
+        }
+        document.write("</tr>");
+
+        // horario.length ahora vale 8: el bucle se adapta solo al número de filas
+        for (let f = 0; f < horario.length; f++) {
+            // Mira la palabra de la fila, no su posición: por eso vale con el recreo en cualquier fila
+            let esRecreo = horario[f][0] === "RECREO";
+            let duracion = 50;
+            if (esRecreo) {
+                duracion = 15;
+            }
+
+            let fin = new Date(inicio);
+            fin.setMinutes(fin.getMinutes() + duracion);
+
+            document.write("<tr>");
+            document.write("<td>" + formatoHora(inicio) + " - " + formatoHora(fin) + "</td>");
+            for (let c = 0; c < horario[f].length; c++) {
+                document.write("<td>" + horario[f][c] + "</td>");
+            }
+            document.write("</tr>");
+
+            inicio = new Date(fin);
+            // Tampoco hay pausa alrededor del segundo recreo: se comprueba la palabra de la fila siguiente
+            if (!esRecreo && f + 1 < horario.length && horario[f + 1][0] !== "RECREO") {
+                inicio.setMinutes(inicio.getMinutes() + 5);
+            }
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+
+</html>
