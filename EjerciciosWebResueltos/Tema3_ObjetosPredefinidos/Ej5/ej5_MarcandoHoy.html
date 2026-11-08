@@ -68,7 +68,12 @@
         // Día de la semana en que empieza el mes y huecos antes del día 1
         let fecha = new Date(anio, numeroMesParaArray, 1);
         let primerDiaMes = fecha.getDay();
-        let huecos = (primerDiaMes + 6) % 7;
+        let huecos;
+        if (primerDia === 0) {
+            huecos = 6;
+        } else {
+            huecos = primerDia - 1;
+        }
 
         // Días del mes: día 0 del mes siguiente = último día de este mes
         let diasMes = new Date(anio, mesUsuario, 0).getDate();
