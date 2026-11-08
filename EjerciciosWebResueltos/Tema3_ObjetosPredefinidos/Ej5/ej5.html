@@ -65,7 +65,12 @@
         let primerDiaMes = fecha.getDay();
 
         // CON ESTE CALCULO SACO LOS HUECOS DE LA SEMANA LIBRES HASTA QUE EMPIEZA EL MES
-        let huecos = (primerDiaMes + 6) % 7;
+        let huecos;
+        if (primerDia === 0) {
+            huecos = 6;
+        } else {
+            huecos = primerDia - 1;
+        }
         // PONGO EL MES SIGUIENTE EN DIA '0' PORQUE ASÍ ME DICE CUANTOS DIAS TIENE EL MES ANTERIOR (EL ESCOGIDO POR EL USUARIO)
         let diasMes = new Date(2026, mesUsuario, 0).getDate();
 
