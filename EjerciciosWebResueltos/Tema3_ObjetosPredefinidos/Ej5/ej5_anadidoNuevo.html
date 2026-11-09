@@ -1,0 +1,103 @@
+Ninguno seleccionado
+
+Ir al contenido
+Uso de Correo de IES Segundo de Chomón con lectores de pantalla
+Conversaciones
+ 
+Política del programa
+Con la tecnología de Google
+Última actividad de la cuenta: hace 54 minutos
+Detalles
+horario.html
+100 %
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Horario 2º DAM</title>
+  <style>
+    body { font-family: serif; background: #eee; padding: 10px; }
+    table { border-collapse: collapse; margin-top: 15px; }
+    th { background: #111; color: #fff; padding: 8px 20px; }
+    td { border: 1px solid #333; padding: 8px 15px; text-align: center; }
+    td.hora { font-weight: bold; }
+    .sge { color: #c00; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Horario 2º DAM</h1>
+
+  <label>Hora de inicio:
+    <input type="time" id="inicio" value="08:00">
+  </label>
+  <button id="generar">Generar</button>
+
+  <table id="tabla"></table>
+
+  <script>
+    // Duraciones en minutos
+    const DURACION_CLASE = 55;
+    const DURACION_RECREO = 30;
+
+    const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+
+    // Cada fila es una franja. "RECREO" marca el descanso.
+    const franjas = [
+      ["IPPE", "IPPE", "IPPE", "AD", "SGE"],
+      ["DI", "SGE", "AD", "AD", "SGE"],
+      ["DI", "SGE", "AD", "AD", "SASP"],
+      "RECREO",
+      ["DWC", "PMDM", "PMDM", "PROY", "DI"],
+      ["DWC", "PMDM", "PMDM", "PSP", "DI"],
+      ["DWC", "PMDM", "PMDM", "PSP", "DI"]
+    ];
+
+    // "08:30" -> 510 minutos desde las 00:00
+    function aMinutos(texto) {
+      const [h, m] = texto.split(":").map(Number);
+      return h * 60 + m;
+    }
+
+    // 510 -> "08:30"  (el % 1440 hace que 24:43 pase a ser 00:43)
+    function aTexto(minutos) {
+      minutos = minutos % 1440;
+      const h = Math.floor(minutos / 60);
+      const m = minutos % 60;
+      return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+    }
+
+    function generarHorario() {
+      let actual = aMinutos(document.getElementById("inicio").value);
+
+      // Cabecera
+      let html = "<tr><th></th>";
+      dias.forEach(d => html += `<th>${d}</th>`);
+      html += "</tr>";
+
+      // Filas
+      franjas.forEach(franja => {
+        const esRecreo = franja === "RECREO";
+        const duracion = esRecreo ? DURACION_RECREO : DURACION_CLASE;
+        const fin = actual + duracion;
+
+        html += `<tr><td class="hora">${aTexto(actual)}-${aTexto(fin)}</td>`;
+
+        dias.forEach((d, i) => {
+          const asignatura = esRecreo ? "RECREO" : franja[i];
+          const clase = asignatura === "SGE" ? ' class="sge"' : "";
+          html += `<td${clase}>${asignatura}</td>`;
+        });
+
+        html += "</tr>";
+        actual = fin;  // la siguiente franja empieza donde acaba esta
+      });
+
+      document.getElementById("tabla").innerHTML = html;
+    }
+
+    document.getElementById("generar").addEventListener("click", generarHorario);
+    generarHorario(); // se pinta al abrir la página
+  </script>
+</body>
+</html>
+Mostrando horario.html.
